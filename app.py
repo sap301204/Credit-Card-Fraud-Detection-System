@@ -26,11 +26,12 @@ st.set_page_config(
 # -------------------------------------------------
 # CUSTOM CSS
 # -------------------------------------------------
+
 st.markdown("""
 <style>
     .stApp {
         background:
-            radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 28%),
+            radial-gradient(circle at top right, rgba(34,197,94,0.06), transparent 28%),
             linear-gradient(135deg, #F4F7FB 0%, #EDF2F7 100%);
         color: #0F172A;
     }
@@ -47,11 +48,10 @@ st.markdown("""
     }
 
     /* -----------------------------------------
-       SIDEBAR - LIGHT POWER BI / ADMIN STYLE
+       SIDEBAR - LIGHT ADMIN / POWER BI STYLE
     ----------------------------------------- */
     [data-testid="stSidebar"] {
-        background:
-            linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%) !important;
+        background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%) !important;
         border-right: 1px solid #D8E0EA;
         box-shadow: 10px 0 30px rgba(15,23,42,0.06);
     }
@@ -64,7 +64,7 @@ st.markdown("""
         background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
         border: 1px solid #E2E8F0;
         border-radius: 18px;
-        padding: 16px 16px;
+        padding: 16px;
         margin-bottom: 18px;
         box-shadow: 0 10px 24px rgba(15,23,42,0.06);
     }
@@ -92,7 +92,13 @@ st.markdown("""
         margin-bottom: 8px;
     }
 
-    /* Sidebar navigation radio */
+    /* -----------------------------------------
+       RADIO / NAVIGATION
+    ----------------------------------------- */
+    [data-testid="stSidebar"] input[type="radio"] {
+        accent-color: #22C55E !important;
+    }
+
     [data-testid="stSidebar"] div[role="radiogroup"] {
         gap: 8px;
     }
@@ -136,7 +142,9 @@ st.markdown("""
         color: #0F172A !important;
     }
 
-    /* Sidebar inputs */
+    /* -----------------------------------------
+       SIDEBAR INPUTS
+    ----------------------------------------- */
     [data-testid="stSidebar"] label {
         font-weight: 700 !important;
         color: #334155 !important;
@@ -164,13 +172,53 @@ st.markdown("""
         background: #EEF2F7 !important;
         color: #0F172A !important;
         border-radius: 8px !important;
+        border: 1px solid #DCE4EC !important;
     }
 
-    [data-testid="stSidebar"] [data-testid="stSlider"] span {
+    /* -----------------------------------------
+       SLIDER FIX - REMOVE RED, MATCH THEME
+    ----------------------------------------- */
+
+    /* Slider label/value text */
+    [data-testid="stSidebar"] [data-testid="stSlider"] label,
+    [data-testid="stSidebar"] [data-testid="stSlider"] span,
+    [data-testid="stSidebar"] [data-testid="stSlider"] div {
         color: #334155 !important;
     }
 
-    /* Buttons */
+    /* Inactive rail */
+    [data-testid="stSidebar"] div[data-baseweb="slider"] > div > div > div {
+        background: #D7E2EC !important;
+        height: 6px !important;
+        border-radius: 999px !important;
+    }
+
+    /* Active track */
+    [data-testid="stSidebar"] div[data-baseweb="slider"] > div > div > div > div {
+        background: linear-gradient(90deg, #22C55E 0%, #16A34A 100%) !important;
+        height: 6px !important;
+        border-radius: 999px !important;
+        box-shadow: 0 0 8px rgba(34,197,94,0.18);
+    }
+
+    /* Slider thumb */
+    [data-testid="stSidebar"] div[data-baseweb="slider"] [role="slider"] {
+        width: 16px !important;
+        height: 16px !important;
+        border-radius: 50% !important;
+        background: #FFFFFF !important;
+        border: 3px solid #22C55E !important;
+        box-shadow: 0 0 0 5px rgba(34,197,94,0.12) !important;
+    }
+
+    [data-testid="stSidebar"] div[data-baseweb="slider"] [role="slider"]:hover {
+        transform: scale(1.04);
+        box-shadow: 0 0 0 6px rgba(34,197,94,0.18) !important;
+    }
+
+    /* -----------------------------------------
+       BUTTON
+    ----------------------------------------- */
     .stButton > button {
         background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !important;
         color: white !important;
@@ -188,7 +236,7 @@ st.markdown("""
         box-shadow: 0 20px 40px rgba(34,197,94,0.36);
     }
 
-    /* Hero */
+    /* HERO */
     .hero-card {
         background:
             radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 28%),
@@ -228,7 +276,7 @@ st.markdown("""
         line-height: 1.6;
     }
 
-    /* Section header */
+    /* SECTION BANNER */
     .section-banner {
         background:
             radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 28%),
@@ -257,7 +305,7 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* KPI Cards */
+    /* KPI CARD */
     .metric-card {
         background: linear-gradient(135deg, #FFFFFF 0%, #FCFDFE 100%);
         border: 1px solid #E2E8F0;
@@ -282,13 +330,6 @@ st.markdown("""
         background: linear-gradient(180deg, #22C55E, #16A34A);
     }
 
-    .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow:
-            0 24px 48px rgba(15,23,42,0.12),
-            0 0 30px rgba(34,197,94,0.08);
-    }
-
     .metric-label {
         font-size: 0.95rem;
         font-weight: 850;
@@ -309,7 +350,7 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Container / chart cards pop */
+    /* CHART / BOX POP EFFECT */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background: #FFFFFF !important;
         border: 1px solid #E2E8F0 !important;
@@ -343,7 +384,6 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Result cards */
     .result-card {
         background: linear-gradient(135deg, #FFFFFF 0%, #FCFDFE 100%);
         border: 1px solid #E2E8F0;
@@ -363,20 +403,9 @@ st.markdown("""
         margin-bottom: 14px;
     }
 
-    .pill-allow {
-        background: #DCFCE7;
-        color: #166534;
-    }
-
-    .pill-review {
-        background: #FEF3C7;
-        color: #92400E;
-    }
-
-    .pill-block {
-        background: #FEE2E2;
-        color: #991B1B;
-    }
+    .pill-allow { background: #DCFCE7; color: #166534; }
+    .pill-review { background: #FEF3C7; color: #92400E; }
+    .pill-block { background: #FEE2E2; color: #991B1B; }
 
     .result-heading {
         font-size: 1.7rem;
@@ -418,7 +447,6 @@ st.markdown("""
         margin-top: 12px;
     }
 
-    /* Tables */
     .table-scroll {
         width: 100%;
         overflow-x: auto;
@@ -464,7 +492,6 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
-
 
 # -------------------------------------------------
 # HELPERS
