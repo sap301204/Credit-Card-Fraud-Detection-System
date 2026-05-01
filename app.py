@@ -24,16 +24,20 @@ st.set_page_config(
 
 
 # -------------------------------------------------
-# CSS - POWER BI STYLE PREMIUM UI
+# PREMIUM POWER BI STYLE CSS
 # -------------------------------------------------
 st.markdown("""
 <style>
     .stApp {
-        background: #F4F7FB;
+        background:
+            radial-gradient(circle at top right, rgba(34,197,94,0.10), transparent 30%),
+            linear-gradient(135deg, #F5F7FB 0%, #EEF3F8 100%);
+        color: #0F172A;
     }
 
     [data-testid="stHeader"] {
-        background: rgba(244, 247, 251, 0.95);
+        background: rgba(245, 247, 251, 0.85);
+        backdrop-filter: blur(14px);
     }
 
     .block-container {
@@ -42,58 +46,125 @@ st.markdown("""
         max-width: 1450px;
     }
 
-    /* Sidebar */
+    /* ---------------- SIDEBAR POWER BI STYLE ---------------- */
     [data-testid="stSidebar"] {
-        background: #EAF1F8;
-        border-right: 1px solid #D7E0EA;
+        background:
+            radial-gradient(circle at top left, rgba(34,197,94,0.22), transparent 30%),
+            linear-gradient(180deg, #0F172A 0%, #111827 48%, #020617 100%);
+        border-right: 1px solid rgba(255,255,255,0.10);
+        box-shadow: 8px 0 28px rgba(15, 23, 42, 0.22);
+    }
+
+    [data-testid="stSidebar"] * {
+        color: #E5E7EB !important;
     }
 
     [data-testid="stSidebar"] h1,
     [data-testid="stSidebar"] h2,
     [data-testid="stSidebar"] h3,
-    [data-testid="stSidebar"] h4,
-    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] h4 {
+        color: #FFFFFF !important;
+        font-weight: 900 !important;
+    }
+
+    .sidebar-brand {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 22px;
+        padding: 18px 16px;
+        margin-bottom: 18px;
+        box-shadow: 0 16px 34px rgba(0,0,0,0.20);
+    }
+
+    .sidebar-brand-title {
+        font-size: 1.3rem;
+        font-weight: 900;
+        color: #FFFFFF !important;
+        margin-bottom: 4px;
+    }
+
+    .sidebar-brand-sub {
+        font-size: 0.85rem;
+        color: #A7F3D0 !important;
+        line-height: 1.4;
+    }
+
+    .sidebar-section-label {
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: #94A3B8 !important;
+        font-weight: 900;
+        margin-top: 18px;
+        margin-bottom: 8px;
+    }
+
+    /* Sidebar radio nav */
+    [data-testid="stSidebar"] div[role="radiogroup"] label {
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 14px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        transition: all 0.22s ease;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+        background: rgba(34,197,94,0.22);
+        border: 1px solid rgba(34,197,94,0.45);
+        transform: translateX(3px);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label p {
+        font-weight: 800 !important;
+        color: #F8FAFC !important;
+    }
+
+    /* Sidebar inputs */
     [data-testid="stSidebar"] label {
-        color: #0F172A !important;
+        font-weight: 700 !important;
+        color: #CBD5E1 !important;
     }
 
     [data-testid="stNumberInput"] input {
-        background: #FFFFFF !important;
+        background: rgba(255,255,255,0.95) !important;
         color: #0F172A !important;
-        border: 1px solid #CBD5E1 !important;
+        border: 1px solid rgba(34,197,94,0.35) !important;
         border-radius: 12px !important;
     }
 
     [data-testid="stNumberInput"] button {
-        color: #0F172A !important;
+        color: #FFFFFF !important;
+        background: rgba(255,255,255,0.08) !important;
+        border-radius: 8px !important;
     }
 
     div[data-baseweb="select"] > div {
-        background: #FFFFFF !important;
+        background: rgba(255,255,255,0.96) !important;
         color: #0F172A !important;
-        border: 1px solid #CBD5E1 !important;
+        border: 1px solid rgba(34,197,94,0.35) !important;
         border-radius: 12px !important;
         min-height: 44px !important;
     }
 
     div[data-baseweb="select"] span {
         color: #0F172A !important;
+        font-weight: 700 !important;
     }
 
     div[data-baseweb="select"] svg {
-        fill: #475569 !important;
+        fill: #0F172A !important;
     }
 
     [data-baseweb="popover"] * {
         color: #0F172A !important;
     }
 
-    [data-testid="stSlider"] label,
     [data-testid="stSlider"] span {
-        color: #0F172A !important;
+        color: #E5E7EB !important;
     }
 
-    /* Button */
+    /* Buttons */
     .stButton > button {
         background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !important;
         color: white !important;
@@ -101,23 +172,27 @@ st.markdown("""
         border-radius: 14px !important;
         padding: 0.78rem 1.15rem !important;
         font-weight: 900 !important;
-        box-shadow: 0 12px 24px rgba(34, 197, 94, 0.22);
+        box-shadow: 0 12px 26px rgba(34, 197, 94, 0.28);
         transition: all 0.25s ease;
     }
 
     .stButton > button:hover {
         transform: translateY(-2px);
         color: white !important;
-        box-shadow: 0 18px 36px rgba(34, 197, 94, 0.30);
+        box-shadow: 0 20px 40px rgba(34, 197, 94, 0.36);
     }
 
     /* Hero */
     .hero-card {
-        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        background:
+            radial-gradient(circle at top right, rgba(34,197,94,0.12), transparent 30%),
+            linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
         border: 1px solid #E5E7EB;
-        border-radius: 28px;
-        padding: 32px 36px;
-        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.08);
+        border-radius: 30px;
+        padding: 34px 38px;
+        box-shadow:
+            0 20px 50px rgba(15, 23, 42, 0.10),
+            0 0 0 1px rgba(255,255,255,0.7) inset;
         margin-bottom: 28px;
         position: relative;
         overflow: hidden;
@@ -134,11 +209,11 @@ st.markdown("""
     }
 
     .hero-title {
-        font-size: 2.45rem;
-        font-weight: 900;
+        font-size: 2.5rem;
+        font-weight: 950;
         color: #0F172A;
         margin-bottom: 8px;
-        letter-spacing: -0.7px;
+        letter-spacing: -0.9px;
     }
 
     .hero-subtitle {
@@ -147,24 +222,25 @@ st.markdown("""
         line-height: 1.6;
     }
 
-    /* Section header */
+    /* Page section */
     .section-banner {
-        background: #FFFFFF;
+        background:
+            radial-gradient(circle at top right, rgba(34,197,94,0.10), transparent 30%),
+            #FFFFFF;
         border: 1px solid #E5E7EB;
-        border-left: 7px solid #16A34A;
-        border-radius: 22px;
-        padding: 20px 24px;
-        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
-        margin-top: 30px;
-        margin-bottom: 20px;
+        border-left: 8px solid #16A34A;
+        border-radius: 24px;
+        padding: 22px 26px;
+        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+        margin-bottom: 22px;
     }
 
     .section-title {
-        font-size: 1.85rem;
-        font-weight: 900;
+        font-size: 1.95rem;
+        font-weight: 950;
         color: #0F172A;
         margin-bottom: 5px;
-        letter-spacing: -0.4px;
+        letter-spacing: -0.5px;
     }
 
     .section-subtitle {
@@ -177,9 +253,11 @@ st.markdown("""
     .metric-card {
         background: #FFFFFF;
         border: 1px solid #E5E7EB;
-        border-radius: 24px;
+        border-radius: 26px;
         padding: 24px 24px;
-        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.09);
+        box-shadow:
+            0 18px 42px rgba(15, 23, 42, 0.10),
+            0 0 30px rgba(34,197,94,0.05);
         min-height: 155px;
         transition: all 0.25s ease;
         position: relative;
@@ -197,20 +275,22 @@ st.markdown("""
     }
 
     .metric-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 22px 48px rgba(15, 23, 42, 0.14);
+        transform: translateY(-4px);
+        box-shadow:
+            0 24px 54px rgba(15, 23, 42, 0.16),
+            0 0 34px rgba(34,197,94,0.13);
     }
 
     .metric-label {
         font-size: 0.95rem;
-        font-weight: 800;
+        font-weight: 850;
         color: #64748B;
         margin-bottom: 10px;
     }
 
     .metric-value {
-        font-size: 2.25rem;
-        font-weight: 900;
+        font-size: 2.28rem;
+        font-weight: 950;
         color: #0F172A;
         margin-bottom: 10px;
     }
@@ -221,29 +301,29 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Power BI-like chart cards */
+    /* Chart Cards */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background: #FFFFFF !important;
         border: 1px solid #E5E7EB !important;
-        border-radius: 26px !important;
+        border-radius: 28px !important;
         box-shadow:
-            0 16px 38px rgba(15, 23, 42, 0.09),
-            0 4px 10px rgba(15, 23, 42, 0.04) !important;
-        padding: 1.15rem 1.15rem 1.25rem 1.15rem !important;
-        margin-bottom: 24px !important;
+            0 18px 42px rgba(15, 23, 42, 0.10),
+            0 0 28px rgba(34,197,94,0.06) !important;
+        padding: 1.2rem 1.2rem 1.3rem 1.2rem !important;
+        margin-bottom: 26px !important;
         transition: all 0.25s ease-in-out !important;
     }
 
     div[data-testid="stVerticalBlockBorderWrapper"]:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px);
         box-shadow:
-            0 22px 48px rgba(15, 23, 42, 0.13),
-            0 8px 18px rgba(15, 23, 42, 0.06) !important;
+            0 24px 56px rgba(15, 23, 42, 0.15),
+            0 0 38px rgba(34,197,94,0.12) !important;
     }
 
     .card-title {
-        font-size: 1.22rem;
-        font-weight: 900;
+        font-size: 1.24rem;
+        font-weight: 950;
         color: #0F172A;
         margin-bottom: 6px;
     }
@@ -255,13 +335,17 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Result cards */
+    /* Result */
     .result-card {
-        background: #FFFFFF;
+        background:
+            radial-gradient(circle at top right, rgba(34,197,94,0.12), transparent 28%),
+            #FFFFFF;
         border: 1px solid #E5E7EB;
         border-radius: 24px;
         padding: 22px;
-        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+        box-shadow:
+            0 16px 38px rgba(15, 23, 42, 0.10),
+            0 0 24px rgba(34,197,94,0.06);
     }
 
     .decision-pill {
@@ -269,7 +353,7 @@ st.markdown("""
         padding: 7px 14px;
         border-radius: 999px;
         font-size: 0.84rem;
-        font-weight: 900;
+        font-weight: 950;
         margin-bottom: 14px;
     }
 
@@ -290,7 +374,7 @@ st.markdown("""
 
     .result-heading {
         font-size: 1.75rem;
-        font-weight: 900;
+        font-weight: 950;
         color: #0F172A;
         margin-bottom: 10px;
     }
@@ -311,7 +395,7 @@ st.markdown("""
 
     .risk-factor-title {
         font-size: 0.95rem;
-        font-weight: 900;
+        font-weight: 950;
         color: #0F172A;
         margin-bottom: 6px;
     }
@@ -350,7 +434,7 @@ st.markdown("""
         color: #0F172A;
         text-align: left;
         padding: 13px 15px;
-        font-weight: 900;
+        font-weight: 950;
         border-bottom: 1px solid #E5E7EB;
         font-size: 0.9rem;
         white-space: nowrap;
@@ -360,7 +444,7 @@ st.markdown("""
         padding: 13px 15px;
         border-bottom: 1px solid #EEF2F7;
         color: #0F172A;
-        font-weight: 600;
+        font-weight: 650;
         font-size: 0.92rem;
         white-space: nowrap;
     }
@@ -449,8 +533,12 @@ def clamp(value, low=0.01, high=0.99):
     return max(low, min(high, value))
 
 
+def transaction_signature(tx_df):
+    return str(tx_df.to_dict(orient="records")[0])
+
+
 # -------------------------------------------------
-# BUSINESS RISK SCORING LAYER
+# BUSINESS RISK SCORING
 # -------------------------------------------------
 def calculate_business_risk(tx):
     amount = float(tx["amount"])
@@ -467,13 +555,11 @@ def calculate_business_risk(tx):
     risk = 0.03
     factors = []
 
-    amount_score = min(amount / 100000, 1.0) * 0.20
-    risk += amount_score
+    risk += min(amount / 100000, 1.0) * 0.20
     if amount >= 50000:
         factors.append("High transaction amount")
 
-    velocity_score = min(velocity / 150000, 1.0) * 0.24
-    risk += velocity_score
+    risk += min(velocity / 150000, 1.0) * 0.24
     if velocity >= 70000:
         factors.append("High transaction velocity")
 
@@ -493,6 +579,7 @@ def calculate_business_risk(tx):
         factors.append("Late-hour transaction")
     elif 9 <= hour <= 18:
         risk -= 0.04
+        factors.append("Business-hour transaction")
 
     if day in [5, 6]:
         risk += 0.04
@@ -503,6 +590,7 @@ def calculate_business_risk(tx):
         factors.append("High previous transaction count")
     elif prev_count >= 8:
         risk += 0.05
+        factors.append("Moderate transaction frequency")
 
     merchant_risk = {
         "crypto": 0.20,
@@ -514,6 +602,7 @@ def calculate_business_risk(tx):
         "fuel": 0.01,
         "grocery": -0.03
     }
+
     risk += merchant_risk.get(merchant, 0.03)
 
     if merchant in ["crypto", "luxury", "electronics", "travel"]:
@@ -522,6 +611,8 @@ def calculate_business_risk(tx):
     if channel == "online":
         risk += 0.05
         factors.append("Online transaction channel")
+    else:
+        risk -= 0.02
 
     if device == "mobile":
         risk += 0.03
@@ -539,8 +630,7 @@ def calculate_business_risk(tx):
 
 
 def final_fraud_probability(model_probability, business_probability):
-    final_probability = (0.35 * model_probability) + (0.65 * business_probability)
-    return clamp(final_probability, 0.01, 0.99)
+    return clamp((0.35 * model_probability) + (0.65 * business_probability), 0.01, 0.99)
 
 
 # -------------------------------------------------
@@ -631,9 +721,30 @@ model, df, metrics, feature_importance_df = train_model()
 
 
 # -------------------------------------------------
-# SIDEBAR INPUTS
+# SIDEBAR NAVIGATION
 # -------------------------------------------------
-st.sidebar.markdown("## Enter Transaction Details")
+st.sidebar.markdown("""
+<div class="sidebar-brand">
+    <div class="sidebar-brand-title">💳 Fraud Ops</div>
+    <div class="sidebar-brand-sub">Power BI-style ML fraud analytics dashboard</div>
+</div>
+""", unsafe_allow_html=True)
+
+st.sidebar.markdown('<div class="sidebar-section-label">Navigation</div>', unsafe_allow_html=True)
+
+page = st.sidebar.radio(
+    "Go to",
+    [
+        "🏠 Dashboard Overview",
+        "📊 Fraud Analytics",
+        "⚡ Live Scoring",
+        "🧠 Model Insights",
+        "📋 Fraud Summary"
+    ],
+    label_visibility="collapsed"
+)
+
+st.sidebar.markdown('<div class="sidebar-section-label">Transaction Inputs</div>', unsafe_allow_html=True)
 
 amount = st.sidebar.number_input("Transaction Amount", min_value=0.0, value=75000.0, step=1000.0)
 hour = st.sidebar.slider("Transaction Hour", 0, 23, 2)
@@ -719,124 +830,6 @@ top_fraud_table = (
 top_fraud_table["merchant_category"] = top_fraud_table["merchant_category"].str.title()
 top_fraud_table["Average_Fraud_Amount"] = top_fraud_table["Average_Fraud_Amount"].round(2)
 
-
-# -------------------------------------------------
-# HEADER
-# -------------------------------------------------
-st.markdown("""
-<div class="hero-card">
-    <div class="hero-title">💳 Credit Card Fraud Detection Dashboard</div>
-    <div class="hero-subtitle">
-        Premium fraud analytics dashboard with ML scoring, business risk rules, KPI monitoring, and transaction-level fraud decisions.
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-
-# -------------------------------------------------
-# KPI CARDS
-# -------------------------------------------------
-k1, k2, k3, k4 = st.columns(4, gap="large")
-
-with k1:
-    render_metric_card("Total Transactions", f"{total_tx:,}", "Synthetic dataset used for simulation")
-
-with k2:
-    render_metric_card("Fraud Transactions", f"{fraud_tx:,}", "Detected fraudulent records in dataset")
-
-with k3:
-    render_metric_card("Fraud Rate", f"{fraud_rate:.2f}%", "Overall fraud prevalence")
-
-with k4:
-    render_metric_card("Fraud Amount", f"₹{fraud_amount:,.0f}", "Total value of fraudulent transactions")
-
-
-# -------------------------------------------------
-# SECTION 1: FRAUD ANALYTICS
-# -------------------------------------------------
-section_header(
-    "Fraud Analytics Overview",
-    "Explore fraud behavior across time, merchant category, channel, and device type."
-)
-
-c1, c2 = st.columns(2, gap="large")
-
-with c1:
-    with st.container(border=True):
-        card_title("Fraudulent Transactions by Hour", "Hourly pattern of detected fraud cases")
-        fig_hour = px.bar(
-            hour_df,
-            x="hour",
-            y="Fraud Transactions",
-            labels={"hour": "Hour", "Fraud Transactions": "Fraud Transactions"},
-            color_discrete_sequence=["#22C55E"]
-        )
-        style_fig(fig_hour, height=320)
-        st.plotly_chart(fig_hour, use_container_width=True, config={"displayModeBar": False})
-
-with c2:
-    with st.container(border=True):
-        card_title("Fraud Percentage by Merchant Category", "Merchant categories ranked by fraud share")
-        fig_merchant = px.bar(
-            merchant_df,
-            x="merchant_category",
-            y="Fraud Percentage",
-            labels={
-                "merchant_category": "Merchant Category",
-                "Fraud Percentage": "Fraud Percentage (%)"
-            },
-            color_discrete_sequence=["#16A34A"]
-        )
-        style_fig(fig_merchant, height=320)
-        fig_merchant.update_xaxes(tickangle=30)
-        st.plotly_chart(fig_merchant, use_container_width=True, config={"displayModeBar": False})
-
-c3, c4 = st.columns(2, gap="large")
-
-with c3:
-    with st.container(border=True):
-        card_title("Transaction Share by Channel", "Distribution of transactions across channels")
-        fig_channel = px.pie(
-            channel_df,
-            names="channel",
-            values="Transactions",
-            hole=0.60,
-            color_discrete_sequence=["#22C55E", "#CBD5E1"]
-        )
-        fig_channel.update_layout(
-            template="plotly_white",
-            paper_bgcolor="#FFFFFF",
-            plot_bgcolor="#FFFFFF",
-            font=dict(color="#0F172A", size=13),
-            height=320,
-            margin=dict(l=25, r=25, t=10, b=10),
-            legend_title_text="",
-            showlegend=True
-        )
-        st.plotly_chart(fig_channel, use_container_width=True, config={"displayModeBar": False})
-
-with c4:
-    with st.container(border=True):
-        card_title("Fraud Rate by Device Type", "Fraud risk split by device source")
-        fig_device = px.bar(
-            device_df,
-            x="device_type",
-            y="Fraud Rate",
-            labels={"device_type": "Device Type", "Fraud Rate": "Fraud Rate (%)"},
-            color_discrete_sequence=["#16A34A"]
-        )
-        style_fig(fig_device, height=320)
-        st.plotly_chart(fig_device, use_container_width=True, config={"displayModeBar": False})
-
-
-# -------------------------------------------------
-# SECTION 2: LIVE SCORING
-# -------------------------------------------------
-section_header(
-    "Live Transaction Scoring",
-    "Enter transaction details and generate a dynamic fraud score. The score updates using ML probability plus business-risk logic."
-)
-
 transaction = pd.DataFrame([{
     "amount": amount,
     "hour": hour,
@@ -872,207 +865,400 @@ preview_df["Channel"] = preview_df["Channel"].str.title()
 preview_df["International"] = preview_df["International"].map({1: "Yes", 0: "No"})
 preview_df["Night Tx"] = preview_df["Night Tx"].map({1: "Yes", 0: "No"})
 
-if "has_scored" not in st.session_state:
-    st.session_state.has_scored = False
+current_signature = transaction_signature(transaction)
 
-left, right = st.columns([1.12, 1], gap="large")
 
-with left:
-    with st.container(border=True):
-        card_title("Transaction Preview", "Transaction values to be scored")
-        st.markdown(html_table(preview_df, "preview-table"), unsafe_allow_html=True)
+# -------------------------------------------------
+# HEADER
+# -------------------------------------------------
+st.markdown("""
+<div class="hero-card">
+    <div class="hero-title">💳 Credit Card Fraud Detection Dashboard</div>
+    <div class="hero-subtitle">
+        Premium Power BI-style fraud analytics dashboard with ML scoring, business risk logic, KPI monitoring, and transaction-level decisions.
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
-        st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
 
-        if st.button("Predict Fraud Risk", key="predict_button"):
-            st.session_state.has_scored = True
+# -------------------------------------------------
+# COMMON KPI ROW
+# -------------------------------------------------
+def show_kpis():
+    k1, k2, k3, k4 = st.columns(4, gap="large")
 
-with right:
-    with st.container(border=True):
-        card_title("Fraud Risk Score", "Prediction output for current transaction")
+    with k1:
+        render_metric_card("Total Transactions", f"{total_tx:,}", "Synthetic dataset used for simulation")
 
-        if not st.session_state.has_scored:
-            st.markdown("""
-            <div class="result-card" style="box-shadow:none; border:none; padding:8px 0;">
-                <div class="result-heading" style="font-size:1.5rem;">No prediction yet</div>
-                <div class="result-text">
-                    Fill the transaction details and click <b>Predict Fraud Risk</b>. After the first click, the score will update automatically when inputs change.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+    with k2:
+        render_metric_card("Fraud Transactions", f"{fraud_tx:,}", "Detected fraudulent records in dataset")
 
-        else:
-            model_probability = float(model.predict_proba(transaction)[0][1])
-            business_probability, risk_factors = calculate_business_risk(transaction.iloc[0])
-            probability = final_fraud_probability(model_probability, business_probability)
+    with k3:
+        render_metric_card("Fraud Rate", f"{fraud_rate:.2f}%", "Overall fraud prevalence")
 
-            if probability >= 0.70:
-                decision = "BLOCK"
-                pill_class = "pill-block"
-                pred_label = "Fraud"
-            elif probability >= 0.40:
-                decision = "REVIEW"
-                pill_class = "pill-review"
-                pred_label = "Fraud"
-            else:
-                decision = "ALLOW"
-                pill_class = "pill-allow"
-                pred_label = "Genuine"
+    with k4:
+        render_metric_card("Fraud Amount", f"₹{fraud_amount:,.0f}", "Total value of fraudulent transactions")
 
-            gauge = go.Figure(go.Indicator(
-                mode="gauge+number",
-                value=probability * 100,
-                number={
-                    "suffix": "%",
-                    "font": {"size": 58, "color": "#0F172A"}
+
+# -------------------------------------------------
+# PAGE: DASHBOARD OVERVIEW
+# -------------------------------------------------
+if page == "🏠 Dashboard Overview":
+    section_header(
+        "Dashboard Overview",
+        "Executive summary of fraud volume, financial exposure, and model performance."
+    )
+
+    show_kpis()
+
+    c1, c2 = st.columns(2, gap="large")
+
+    with c1:
+        with st.container(border=True):
+            card_title("Fraudulent Transactions by Hour", "Quick view of risky transaction timings")
+            fig_hour = px.bar(
+                hour_df,
+                x="hour",
+                y="Fraud Transactions",
+                labels={"hour": "Hour", "Fraud Transactions": "Fraud Transactions"},
+                color_discrete_sequence=["#22C55E"]
+            )
+            style_fig(fig_hour, height=320)
+            st.plotly_chart(fig_hour, use_container_width=True, config={"displayModeBar": False})
+
+    with c2:
+        with st.container(border=True):
+            card_title("Top Feature Importance", "Most influential variables for fraud decisions")
+            fi_fig = px.bar(
+                feature_importance_df.sort_values("Importance", ascending=True),
+                x="Importance",
+                y="Feature",
+                orientation="h",
+                color_discrete_sequence=["#22C55E"]
+            )
+            style_fig(fi_fig, height=320)
+            st.plotly_chart(fi_fig, use_container_width=True, config={"displayModeBar": False})
+
+
+# -------------------------------------------------
+# PAGE: FRAUD ANALYTICS
+# -------------------------------------------------
+elif page == "📊 Fraud Analytics":
+    section_header(
+        "Fraud Analytics Overview",
+        "Explore fraud behavior across time, merchant category, channel, and device type."
+    )
+
+    c1, c2 = st.columns(2, gap="large")
+
+    with c1:
+        with st.container(border=True):
+            card_title("Fraudulent Transactions by Hour", "Hourly pattern of detected fraud cases")
+            fig_hour = px.bar(
+                hour_df,
+                x="hour",
+                y="Fraud Transactions",
+                labels={"hour": "Hour", "Fraud Transactions": "Fraud Transactions"},
+                color_discrete_sequence=["#22C55E"]
+            )
+            style_fig(fig_hour, height=340)
+            st.plotly_chart(fig_hour, use_container_width=True, config={"displayModeBar": False})
+
+    with c2:
+        with st.container(border=True):
+            card_title("Fraud Percentage by Merchant Category", "Merchant categories ranked by fraud share")
+            fig_merchant = px.bar(
+                merchant_df,
+                x="merchant_category",
+                y="Fraud Percentage",
+                labels={
+                    "merchant_category": "Merchant Category",
+                    "Fraud Percentage": "Fraud Percentage (%)"
                 },
-                gauge={
-                    "axis": {
-                        "range": [0, 100],
-                        "tickwidth": 1,
-                        "tickcolor": "#475569"
-                    },
-                    "bar": {"color": "#16A34A", "thickness": 0.34},
-                    "bgcolor": "white",
-                    "borderwidth": 1,
-                    "bordercolor": "#E5E7EB",
-                    "steps": [
-                        {"range": [0, 40], "color": "#DCFCE7"},
-                        {"range": [40, 70], "color": "#FEF3C7"},
-                        {"range": [70, 100], "color": "#FEE2E2"}
-                    ]
-                }
-            ))
+                color_discrete_sequence=["#16A34A"]
+            )
+            style_fig(fig_merchant, height=340)
+            fig_merchant.update_xaxes(tickangle=30)
+            st.plotly_chart(fig_merchant, use_container_width=True, config={"displayModeBar": False})
 
-            gauge.update_layout(
+    c3, c4 = st.columns(2, gap="large")
+
+    with c3:
+        with st.container(border=True):
+            card_title("Transaction Share by Channel", "Distribution of transactions across channels")
+            fig_channel = px.pie(
+                channel_df,
+                names="channel",
+                values="Transactions",
+                hole=0.60,
+                color_discrete_sequence=["#22C55E", "#CBD5E1"]
+            )
+            fig_channel.update_layout(
                 template="plotly_white",
                 paper_bgcolor="#FFFFFF",
                 plot_bgcolor="#FFFFFF",
                 font=dict(color="#0F172A", size=13),
+                height=340,
                 margin=dict(l=25, r=25, t=10, b=10),
-                height=280
+                legend_title_text="",
+                showlegend=True
             )
+            st.plotly_chart(fig_channel, use_container_width=True, config={"displayModeBar": False})
 
-            st.plotly_chart(gauge, use_container_width=True, config={"displayModeBar": False})
+    with c4:
+        with st.container(border=True):
+            card_title("Fraud Rate by Device Type", "Fraud risk split by device source")
+            fig_device = px.bar(
+                device_df,
+                x="device_type",
+                y="Fraud Rate",
+                labels={"device_type": "Device Type", "Fraud Rate": "Fraud Rate (%)"},
+                color_discrete_sequence=["#16A34A"]
+            )
+            style_fig(fig_device, height=340)
+            st.plotly_chart(fig_device, use_container_width=True, config={"displayModeBar": False})
 
-            st.markdown(f"""
-            <div class="result-card" style="margin-top:10px;">
-                <div class="decision-pill {pill_class}">{decision}</div>
-                <div class="result-heading">Decision: {decision}</div>
-                <div class="result-text">
-                    Final fraud probability is <b>{probability:.2%}</b>. Prediction label: <b>{pred_label}</b>.
-                </div>
-                <div class="risk-factor-box">
-                    <div class="risk-factor-title">Top Risk Signals</div>
-                    <div class="risk-factor-text">{", ".join(risk_factors[:5])}</div>
-                </div>
-                <div class="risk-factor-box">
-                    <div class="risk-factor-title">Score Breakdown</div>
-                    <div class="risk-factor-text">
-                        ML probability: <b>{model_probability:.2%}</b><br>
-                        Business-risk probability: <b>{business_probability:.2%}</b><br>
-                        Final blended score: <b>{probability:.2%}</b>
+
+# -------------------------------------------------
+# PAGE: LIVE SCORING
+# -------------------------------------------------
+elif page == "⚡ Live Scoring":
+    section_header(
+        "Live Transaction Scoring",
+        "Enter transaction details, then click Predict Fraud Risk. Score will not update until the button is clicked again."
+    )
+
+    if "prediction_result" not in st.session_state:
+        st.session_state.prediction_result = None
+
+    if "prediction_signature" not in st.session_state:
+        st.session_state.prediction_signature = None
+
+    left, right = st.columns([1.12, 1], gap="large")
+
+    with left:
+        with st.container(border=True):
+            card_title("Transaction Preview", "Current transaction values from sidebar inputs")
+            st.markdown(html_table(preview_df, "preview-table"), unsafe_allow_html=True)
+
+            st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
+
+            if st.button("Predict Fraud Risk", key="predict_button"):
+                model_probability = float(model.predict_proba(transaction)[0][1])
+                business_probability, risk_factors = calculate_business_risk(transaction.iloc[0])
+                probability = final_fraud_probability(model_probability, business_probability)
+
+                if probability >= 0.70:
+                    decision = "BLOCK"
+                    pill_class = "pill-block"
+                    pred_label = "Fraud"
+                elif probability >= 0.40:
+                    decision = "REVIEW"
+                    pill_class = "pill-review"
+                    pred_label = "Fraud"
+                else:
+                    decision = "ALLOW"
+                    pill_class = "pill-allow"
+                    pred_label = "Genuine"
+
+                st.session_state.prediction_result = {
+                    "probability": probability,
+                    "model_probability": model_probability,
+                    "business_probability": business_probability,
+                    "risk_factors": risk_factors,
+                    "decision": decision,
+                    "pill_class": pill_class,
+                    "pred_label": pred_label
+                }
+
+                st.session_state.prediction_signature = current_signature
+
+    with right:
+        with st.container(border=True):
+            card_title("Fraud Risk Score", "Prediction output for the last scored transaction")
+
+            if st.session_state.prediction_result is None:
+                st.markdown("""
+                <div class="result-card" style="box-shadow:none; border:none; padding:8px 0;">
+                    <div class="result-heading" style="font-size:1.5rem;">No prediction yet</div>
+                    <div class="result-text">
+                        Fill the transaction details and click <b>Predict Fraud Risk</b> to generate a decision.
                     </div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
+                """, unsafe_allow_html=True)
+
+            elif st.session_state.prediction_signature != current_signature:
+                st.markdown("""
+                <div class="result-card" style="box-shadow:none; border:none; padding:8px 0;">
+                    <div class="decision-pill pill-review">INPUTS CHANGED</div>
+                    <div class="result-heading" style="font-size:1.5rem;">Click Predict Fraud Risk again</div>
+                    <div class="result-text">
+                        You changed the transaction values. The previous score is outdated.
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+            else:
+                result = st.session_state.prediction_result
+                probability = result["probability"]
+
+                gauge = go.Figure(go.Indicator(
+                    mode="gauge+number",
+                    value=probability * 100,
+                    number={
+                        "suffix": "%",
+                        "font": {"size": 58, "color": "#0F172A"}
+                    },
+                    gauge={
+                        "axis": {
+                            "range": [0, 100],
+                            "tickwidth": 1,
+                            "tickcolor": "#475569"
+                        },
+                        "bar": {"color": "#16A34A", "thickness": 0.34},
+                        "bgcolor": "white",
+                        "borderwidth": 1,
+                        "bordercolor": "#E5E7EB",
+                        "steps": [
+                            {"range": [0, 40], "color": "#DCFCE7"},
+                            {"range": [40, 70], "color": "#FEF3C7"},
+                            {"range": [70, 100], "color": "#FEE2E2"}
+                        ]
+                    }
+                ))
+
+                gauge.update_layout(
+                    template="plotly_white",
+                    paper_bgcolor="#FFFFFF",
+                    plot_bgcolor="#FFFFFF",
+                    font=dict(color="#0F172A", size=13),
+                    margin=dict(l=25, r=25, t=10, b=10),
+                    height=280
+                )
+
+                st.plotly_chart(gauge, use_container_width=True, config={"displayModeBar": False})
+
+                st.markdown(f"""
+                <div class="result-card" style="margin-top:10px;">
+                    <div class="decision-pill {result["pill_class"]}">{result["decision"]}</div>
+                    <div class="result-heading">Decision: {result["decision"]}</div>
+                    <div class="result-text">
+                        Final fraud probability is <b>{result["probability"]:.2%}</b>. 
+                        Prediction label: <b>{result["pred_label"]}</b>.
+                    </div>
+                    <div class="risk-factor-box">
+                        <div class="risk-factor-title">Top Risk Signals</div>
+                        <div class="risk-factor-text">{", ".join(result["risk_factors"][:5])}</div>
+                    </div>
+                    <div class="risk-factor-box">
+                        <div class="risk-factor-title">Score Breakdown</div>
+                        <div class="risk-factor-text">
+                            ML probability: <b>{result["model_probability"]:.2%}</b><br>
+                            Business-risk probability: <b>{result["business_probability"]:.2%}</b><br>
+                            Final blended score: <b>{result["probability"]:.2%}</b>
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
 
 # -------------------------------------------------
-# SECTION 3: MODEL PERFORMANCE
+# PAGE: MODEL INSIGHTS
 # -------------------------------------------------
-section_header(
-    "Model Performance & Insights",
-    "Monitor model quality and understand which transaction features influence fraud decisions."
-)
-
-m1, m2, m3 = st.columns(3, gap="large")
-
-with m1:
-    render_metric_card("Precision", f"{metrics['precision']:.2f}", "How often fraud predictions are correct")
-
-with m2:
-    render_metric_card("Recall", f"{metrics['recall']:.2f}", "How many actual frauds are captured")
-
-with m3:
-    render_metric_card("F1 Score", f"{metrics['f1']:.2f}", "Balance between precision and recall")
-
-a, b = st.columns(2, gap="large")
-
-with a:
-    with st.container(border=True):
-        card_title("Confusion Matrix", "Actual vs predicted classification results")
-
-        cm = metrics["cm"]
-
-        cm_fig = go.Figure(data=go.Heatmap(
-            z=cm,
-            x=["Predicted Genuine", "Predicted Fraud"],
-            y=["Actual Genuine", "Actual Fraud"],
-            colorscale=[[0, "#ECFDF5"], [1, "#16A34A"]],
-            text=cm,
-            texttemplate="%{text}",
-            showscale=False
-        ))
-
-        cm_fig.update_layout(
-            template="plotly_white",
-            paper_bgcolor="#FFFFFF",
-            plot_bgcolor="#FFFFFF",
-            font=dict(color="#0F172A", size=13),
-            margin=dict(l=65, r=25, t=10, b=55),
-            height=340
-        )
-
-        cm_fig.update_xaxes(
-            tickfont=dict(color="#334155", size=12),
-            title_font=dict(color="#334155", size=13),
-            automargin=True
-        )
-
-        cm_fig.update_yaxes(
-            tickfont=dict(color="#334155", size=12),
-            title_font=dict(color="#334155", size=13),
-            automargin=True
-        )
-
-        st.plotly_chart(cm_fig, use_container_width=True, config={"displayModeBar": False})
-
-with b:
-    with st.container(border=True):
-        card_title("Top Feature Importance", "Most influential variables for model decisions")
-
-        fi_fig = px.bar(
-            feature_importance_df.sort_values("Importance", ascending=True),
-            x="Importance",
-            y="Feature",
-            orientation="h",
-            color_discrete_sequence=["#22C55E"]
-        )
-
-        style_fig(fi_fig, height=340)
-        st.plotly_chart(fi_fig, use_container_width=True, config={"displayModeBar": False})
-
-
-# -------------------------------------------------
-# SECTION 4: FRAUD SUMMARY
-# -------------------------------------------------
-section_header(
-    "Fraud Summary Table",
-    "Merchant-level fraud summary for quick fraud operations review."
-)
-
-display_table = top_fraud_table.rename(columns={
-    "merchant_category": "Merchant Category",
-    "Fraud_Transactions": "Fraud Transactions",
-    "Average_Fraud_Amount": "Average Fraud Amount"
-}).copy()
-
-display_table["Average Fraud Amount"] = display_table["Average Fraud Amount"].map(lambda x: f"₹{x:,.2f}")
-
-with st.container(border=True):
-    st.markdown(html_table(display_table), unsafe_allow_html=True)
-    st.markdown(
-        '<div class="note-text">This table highlights merchant categories with the highest number of fraudulent transactions.</div>',
-        unsafe_allow_html=True
+elif page == "🧠 Model Insights":
+    section_header(
+        "Model Performance & Insights",
+        "Monitor model quality and understand which features influence fraud decisions."
     )
+
+    m1, m2, m3 = st.columns(3, gap="large")
+
+    with m1:
+        render_metric_card("Precision", f"{metrics['precision']:.2f}", "How often fraud predictions are correct")
+
+    with m2:
+        render_metric_card("Recall", f"{metrics['recall']:.2f}", "How many actual frauds are captured")
+
+    with m3:
+        render_metric_card("F1 Score", f"{metrics['f1']:.2f}", "Balance between precision and recall")
+
+    a, b = st.columns(2, gap="large")
+
+    with a:
+        with st.container(border=True):
+            card_title("Confusion Matrix", "Actual vs predicted classification results")
+
+            cm = metrics["cm"]
+
+            cm_fig = go.Figure(data=go.Heatmap(
+                z=cm,
+                x=["Predicted Genuine", "Predicted Fraud"],
+                y=["Actual Genuine", "Actual Fraud"],
+                colorscale=[[0, "#ECFDF5"], [1, "#16A34A"]],
+                text=cm,
+                texttemplate="%{text}",
+                showscale=False
+            ))
+
+            cm_fig.update_layout(
+                template="plotly_white",
+                paper_bgcolor="#FFFFFF",
+                plot_bgcolor="#FFFFFF",
+                font=dict(color="#0F172A", size=13),
+                margin=dict(l=65, r=25, t=10, b=55),
+                height=340
+            )
+
+            cm_fig.update_xaxes(
+                tickfont=dict(color="#334155", size=12),
+                title_font=dict(color="#334155", size=13),
+                automargin=True
+            )
+
+            cm_fig.update_yaxes(
+                tickfont=dict(color="#334155", size=12),
+                title_font=dict(color="#334155", size=13),
+                automargin=True
+            )
+
+            st.plotly_chart(cm_fig, use_container_width=True, config={"displayModeBar": False})
+
+    with b:
+        with st.container(border=True):
+            card_title("Top Feature Importance", "Most influential variables for model decisions")
+
+            fi_fig = px.bar(
+                feature_importance_df.sort_values("Importance", ascending=True),
+                x="Importance",
+                y="Feature",
+                orientation="h",
+                color_discrete_sequence=["#22C55E"]
+            )
+
+            style_fig(fi_fig, height=340)
+            st.plotly_chart(fi_fig, use_container_width=True, config={"displayModeBar": False})
+
+
+# -------------------------------------------------
+# PAGE: FRAUD SUMMARY
+# -------------------------------------------------
+elif page == "📋 Fraud Summary":
+    section_header(
+        "Fraud Summary Table",
+        "Merchant-level fraud summary for quick fraud operations review."
+    )
+
+    display_table = top_fraud_table.rename(columns={
+        "merchant_category": "Merchant Category",
+        "Fraud_Transactions": "Fraud Transactions",
+        "Average_Fraud_Amount": "Average Fraud Amount"
+    }).copy()
+
+    display_table["Average Fraud Amount"] = display_table["Average Fraud Amount"].map(lambda x: f"₹{x:,.2f}")
+
+    with st.container(border=True):
+        st.markdown(html_table(display_table), unsafe_allow_html=True)
+        st.markdown(
+            '<div class="note-text">This table highlights merchant categories with the highest number of fraudulent transactions.</div>',
+            unsafe_allow_html=True
+        )
