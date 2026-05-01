@@ -36,6 +36,13 @@ st.markdown("""
         background: rgba(245, 247, 251, 0.95);
     }
 
+    .block-container {
+        padding-top: 1.6rem;
+        padding-bottom: 2rem;
+        max-width: 1450px;
+    }
+
+    /* Sidebar */
     [data-testid="stSidebar"] {
         background: #EEF3F8;
         border-right: 1px solid #DCE4EE;
@@ -50,7 +57,6 @@ st.markdown("""
         color: #0F172A !important;
     }
 
-    /* Sidebar inputs */
     [data-testid="stNumberInput"] input {
         background: #FFFFFF !important;
         color: #0F172A !important;
@@ -94,63 +100,104 @@ st.markdown("""
         border: none !important;
         border-radius: 12px !important;
         padding: 0.75rem 1.1rem !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         box-shadow: 0 8px 18px rgba(34, 197, 94, 0.18);
+        transition: all 0.25s ease;
     }
 
     .stButton > button:hover {
         transform: translateY(-1px);
         color: white !important;
+        box-shadow: 0 12px 25px rgba(34, 197, 94, 0.26);
     }
 
-    /* Main spacing */
-    .block-container {
-        padding-top: 1.6rem;
-        padding-bottom: 2rem;
-        max-width: 1450px;
-    }
-
-    /* Custom cards */
+    /* Header */
     .hero-card {
         background: #FFFFFF;
         border: 1px solid #E5E7EB;
-        border-radius: 24px;
-        padding: 28px 32px;
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
-        margin-bottom: 22px;
+        border-radius: 26px;
+        padding: 30px 34px;
+        box-shadow: 0 14px 35px rgba(15, 23, 42, 0.07);
+        margin-bottom: 26px;
     }
 
     .hero-title {
         font-size: 2.35rem;
-        font-weight: 800;
+        font-weight: 900;
         color: #0F172A;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
     }
 
     .hero-subtitle {
-        font-size: 1.02rem;
+        font-size: 1.03rem;
         color: #475569;
+        line-height: 1.6;
     }
 
+    /* Section */
+    .section-shell {
+        background: #FFFFFF;
+        border: 1px solid #E5E7EB;
+        border-radius: 26px;
+        padding: 24px;
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.06);
+        margin-top: 24px;
+        margin-bottom: 26px;
+    }
+
+    .section-title {
+        font-size: 1.85rem;
+        font-weight: 900;
+        color: #0F172A;
+        margin-bottom: 4px;
+        letter-spacing: -0.3px;
+    }
+
+    .section-subtitle {
+        font-size: 0.98rem;
+        color: #64748B;
+        margin-bottom: 20px;
+    }
+
+    /* KPI Cards */
     .metric-card {
         background: #FFFFFF;
         border: 1px solid #E5E7EB;
-        border-radius: 22px;
+        border-radius: 24px;
         padding: 22px 24px;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+        box-shadow: 0 14px 32px rgba(15, 23, 42, 0.08);
         min-height: 150px;
+        transition: all 0.25s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .metric-card::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 5px;
+        background: linear-gradient(180deg, #22C55E, #16A34A);
+    }
+
+    .metric-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 42px rgba(15, 23, 42, 0.13);
     }
 
     .metric-label {
         font-size: 0.95rem;
-        font-weight: 700;
+        font-weight: 800;
         color: #64748B;
         margin-bottom: 10px;
     }
 
     .metric-value {
         font-size: 2.2rem;
-        font-weight: 800;
+        font-weight: 900;
         color: #0F172A;
         margin-bottom: 10px;
     }
@@ -158,42 +205,49 @@ st.markdown("""
     .metric-sub {
         font-size: 0.94rem;
         color: #475569;
+        line-height: 1.5;
     }
 
-    .section-title {
-        font-size: 1.95rem;
-        font-weight: 800;
-        color: #0F172A;
-        margin-top: 18px;
-        margin-bottom: 14px;
+    /* Chart / card containers */
+    div[data-testid="stVerticalBlockBorderWrapper"] {
+        background: #FFFFFF !important;
+        border: 1px solid #E5E7EB !important;
+        border-radius: 24px !important;
+        box-shadow:
+            0 14px 34px rgba(15, 23, 42, 0.08),
+            0 4px 10px rgba(15, 23, 42, 0.04) !important;
+        padding: 1.1rem 1.1rem 1.2rem 1.1rem !important;
+        margin-bottom: 22px !important;
+        transition: all 0.25s ease-in-out !important;
     }
 
-    .subsection-title {
-        font-size: 1.35rem;
-        font-weight: 800;
-        color: #0F172A;
-        margin-bottom: 12px;
+    div[data-testid="stVerticalBlockBorderWrapper"]:hover {
+        transform: translateY(-2px);
+        box-shadow:
+            0 20px 45px rgba(15, 23, 42, 0.12),
+            0 8px 16px rgba(15, 23, 42, 0.05) !important;
     }
 
     .card-title {
-        font-size: 1.2rem;
-        font-weight: 800;
+        font-size: 1.22rem;
+        font-weight: 900;
         color: #0F172A;
-        margin-bottom: 10px;
-    }
-
-    .card-sub {
-        font-size: 0.92rem;
-        color: #64748B;
         margin-bottom: 6px;
     }
 
+    .card-sub {
+        font-size: 0.93rem;
+        color: #64748B;
+        margin-bottom: 14px;
+    }
+
+    /* Result */
     .result-card {
         background: #FFFFFF;
         border: 1px solid #E5E7EB;
-        border-radius: 22px;
+        border-radius: 24px;
         padding: 22px;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
     }
 
     .decision-pill {
@@ -201,7 +255,7 @@ st.markdown("""
         padding: 7px 14px;
         border-radius: 999px;
         font-size: 0.84rem;
-        font-weight: 800;
+        font-weight: 900;
         margin-bottom: 14px;
     }
 
@@ -221,8 +275,8 @@ st.markdown("""
     }
 
     .result-heading {
-        font-size: 1.85rem;
-        font-weight: 800;
+        font-size: 1.75rem;
+        font-weight: 900;
         color: #0F172A;
         margin-bottom: 10px;
     }
@@ -239,18 +293,16 @@ st.markdown("""
         margin-top: 12px;
     }
 
-    /* Bordered Streamlit containers */
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        background: #FFFFFF;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 22px !important;
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
-        padding: 0.5rem 1rem 1rem 1rem;
+    /* Tables */
+    .table-scroll {
+        width: 100%;
+        overflow-x: auto;
+        border-radius: 18px;
     }
 
-    /* Tables */
     .custom-table {
         width: 100%;
+        min-width: 820px;
         border-collapse: collapse;
         background: #FFFFFF;
         border-radius: 18px;
@@ -262,20 +314,28 @@ st.markdown("""
         background: #F8FAFC;
         color: #0F172A;
         text-align: left;
-        padding: 14px 16px;
-        font-weight: 800;
+        padding: 13px 15px;
+        font-weight: 900;
         border-bottom: 1px solid #E5E7EB;
+        font-size: 0.9rem;
+        white-space: nowrap;
     }
 
     .custom-table td {
-        padding: 14px 16px;
+        padding: 13px 15px;
         border-bottom: 1px solid #EEF2F7;
         color: #0F172A;
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 0.92rem;
+        white-space: nowrap;
     }
 
     .custom-table tr:last-child td {
         border-bottom: none;
+    }
+
+    .preview-table {
+        min-width: 980px;
     }
 
     .small-muted {
@@ -302,12 +362,14 @@ def render_metric_card(title, value, subtitle):
     )
 
 
-def section_title(title):
-    st.markdown(f'<div class="section-title">{title}</div>', unsafe_allow_html=True)
-
-
-def subsection_title(title):
-    st.markdown(f'<div class="subsection-title">{title}</div>', unsafe_allow_html=True)
+def section_header(title, subtitle):
+    st.markdown(
+        f"""
+        <div class="section-title">{title}</div>
+        <div class="section-subtitle">{subtitle}</div>
+        """,
+        unsafe_allow_html=True
+    )
 
 
 def card_title(title, subtitle=None):
@@ -316,13 +378,13 @@ def card_title(title, subtitle=None):
         st.markdown(f'<div class="card-sub">{subtitle}</div>', unsafe_allow_html=True)
 
 
-def style_fig(fig, height=340):
+def style_fig(fig, height=320):
     fig.update_layout(
         template="plotly_white",
         paper_bgcolor="#FFFFFF",
         plot_bgcolor="#FFFFFF",
         font=dict(color="#0F172A", size=13),
-        margin=dict(l=50, r=25, t=10, b=50),
+        margin=dict(l=55, r=25, t=10, b=55),
         height=height,
         showlegend=False
     )
@@ -343,8 +405,12 @@ def style_fig(fig, height=340):
     return fig
 
 
-def preview_table_html(df):
-    return df.to_html(index=False, classes="custom-table", escape=False)
+def html_table(df, extra_class=""):
+    return (
+        f'<div class="table-scroll">'
+        f'{df.to_html(index=False, classes=f"custom-table {extra_class}", escape=False)}'
+        f'</div>'
+    )
 
 
 # -------------------------------------------------
@@ -556,11 +622,14 @@ with k4:
 
 
 # -------------------------------------------------
-# FRAUD ANALYTICS
+# SECTION 1: FRAUD ANALYTICS
 # -------------------------------------------------
-section_title("Fraud Analytics Overview")
+section_header(
+    "Fraud Analytics Overview",
+    "Explore fraud behavior across time, merchant categories, channels, and devices."
+)
 
-c1, c2 = st.columns(2)
+c1, c2 = st.columns(2, gap="large")
 
 with c1:
     with st.container(border=True):
@@ -582,14 +651,17 @@ with c2:
             merchant_df,
             x="merchant_category",
             y="Fraud Percentage",
-            labels={"merchant_category": "Merchant Category", "Fraud Percentage": "Fraud Percentage (%)"},
+            labels={
+                "merchant_category": "Merchant Category",
+                "Fraud Percentage": "Fraud Percentage (%)"
+            },
             color_discrete_sequence=["#16A34A"]
         )
         style_fig(fig_merchant, height=320)
         fig_merchant.update_xaxes(tickangle=30)
         st.plotly_chart(fig_merchant, use_container_width=True, config={"displayModeBar": False})
 
-c3, c4 = st.columns(2)
+c3, c4 = st.columns(2, gap="large")
 
 with c3:
     with st.container(border=True):
@@ -628,9 +700,12 @@ with c4:
 
 
 # -------------------------------------------------
-# LIVE SCORING
+# SECTION 2: LIVE SCORING
 # -------------------------------------------------
-section_title("Live Transaction Scoring")
+section_header(
+    "Live Transaction Scoring",
+    "Score a transaction instantly and classify it as ALLOW, REVIEW, or BLOCK."
+)
 
 transaction = pd.DataFrame([{
     "amount": amount,
@@ -647,30 +722,45 @@ transaction = pd.DataFrame([{
 
 preview_df = transaction.copy()
 preview_df.columns = [
-    "Amount", "Hour", "Day Of Week", "Merchant Category", "Device Type",
-    "Channel", "Is International", "Previous Tx Count", "Velocity Amount", "Is Night"
+    "Amount",
+    "Hour",
+    "Day Of Week",
+    "Merchant Category",
+    "Device Type",
+    "Channel",
+    "International",
+    "Previous Tx Count",
+    "Velocity Amount",
+    "Night Tx"
 ]
+
 preview_df["Amount"] = preview_df["Amount"].map(lambda x: f"₹{x:,.2f}")
 preview_df["Velocity Amount"] = preview_df["Velocity Amount"].map(lambda x: f"₹{x:,.2f}")
 preview_df["Merchant Category"] = preview_df["Merchant Category"].str.title()
 preview_df["Device Type"] = preview_df["Device Type"].str.title()
 preview_df["Channel"] = preview_df["Channel"].str.title()
-preview_df["Is International"] = preview_df["Is International"].map({1: "Yes", 0: "No"})
-preview_df["Is Night"] = preview_df["Is Night"].map({1: "Yes", 0: "No"})
+preview_df["International"] = preview_df["International"].map({1: "Yes", 0: "No"})
+preview_df["Night Tx"] = preview_df["Night Tx"].map({1: "Yes", 0: "No"})
+
+# Unique input signature to avoid stale prediction
+current_signature = str(transaction.to_dict(orient="records")[0])
 
 if "prediction_result" not in st.session_state:
     st.session_state.prediction_result = None
 
-left, right = st.columns([1.15, 1])
+if "prediction_signature" not in st.session_state:
+    st.session_state.prediction_signature = None
+
+left, right = st.columns([1.1, 1], gap="large")
 
 with left:
     with st.container(border=True):
         card_title("Transaction Preview", "Transaction values to be scored")
-        st.markdown(preview_table_html(preview_df), unsafe_allow_html=True)
+        st.markdown(html_table(preview_df, "preview-table"), unsafe_allow_html=True)
 
-        st.markdown("<div style='height:10px'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:14px'></div>", unsafe_allow_html=True)
 
-        if st.button("Predict Fraud Risk"):
+        if st.button("Predict Fraud Risk", key="predict_button"):
             probability = model.predict_proba(transaction)[0][1]
             prediction = model.predict(transaction)[0]
 
@@ -687,43 +777,59 @@ with left:
                 "decision": decision
             }
 
+            st.session_state.prediction_signature = current_signature
+
 with right:
-    if st.session_state.prediction_result is None:
-        with st.container(border=True):
-            card_title("Fraud Risk Score", "Prediction output will appear here")
+    with st.container(border=True):
+        card_title("Fraud Risk Score", "Prediction output for current transaction")
+
+        if st.session_state.prediction_result is None:
             st.markdown("""
-            <div class="result-card" style="box-shadow:none; border:none; padding:6px 0 0 0;">
+            <div class="result-card" style="box-shadow:none; border:none; padding:8px 0;">
                 <div class="result-heading" style="font-size:1.5rem;">No prediction yet</div>
                 <div class="result-text">
                     Fill the transaction details and click <b>Predict Fraud Risk</b> to generate a fraud decision.
                 </div>
             </div>
             """, unsafe_allow_html=True)
-    else:
-        result = st.session_state.prediction_result
-        prob = result["probability"]
-        decision = result["decision"]
-        pred_label = "Fraud" if result["prediction"] == 1 else "Genuine"
 
-        if decision == "ALLOW":
-            pill_class = "pill-allow"
-        elif decision == "REVIEW":
-            pill_class = "pill-review"
+        elif st.session_state.prediction_signature != current_signature:
+            st.markdown("""
+            <div class="result-card" style="box-shadow:none; border:none; padding:8px 0;">
+                <div class="decision-pill pill-review">INPUTS CHANGED</div>
+                <div class="result-heading" style="font-size:1.5rem;">Run prediction again</div>
+                <div class="result-text">
+                    Transaction values have changed. Click <b>Predict Fraud Risk</b> again to update the score.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
         else:
-            pill_class = "pill-block"
+            result = st.session_state.prediction_result
+            prob = result["probability"]
+            decision = result["decision"]
+            pred_label = "Fraud" if result["prediction"] == 1 else "Genuine"
 
-        with st.container(border=True):
-            card_title("Fraud Risk Score", "ML scoring output for current transaction")
+            if decision == "ALLOW":
+                pill_class = "pill-allow"
+            elif decision == "REVIEW":
+                pill_class = "pill-review"
+            else:
+                pill_class = "pill-block"
 
             gauge = go.Figure(go.Indicator(
                 mode="gauge+number",
                 value=prob * 100,
                 number={
                     "suffix": "%",
-                    "font": {"size": 64, "color": "#0F172A"}
+                    "font": {"size": 58, "color": "#0F172A"}
                 },
                 gauge={
-                    "axis": {"range": [0, 100], "tickwidth": 1, "tickcolor": "#475569"},
+                    "axis": {
+                        "range": [0, 100],
+                        "tickwidth": 1,
+                        "tickcolor": "#475569"
+                    },
                     "bar": {"color": "#16A34A", "thickness": 0.34},
                     "bgcolor": "white",
                     "borderwidth": 1,
@@ -741,14 +847,14 @@ with right:
                 paper_bgcolor="#FFFFFF",
                 plot_bgcolor="#FFFFFF",
                 font=dict(color="#0F172A", size=13),
-                margin=dict(l=25, r=25, t=20, b=20),
-                height=300
+                margin=dict(l=25, r=25, t=10, b=10),
+                height=280
             )
 
             st.plotly_chart(gauge, use_container_width=True, config={"displayModeBar": False})
 
             st.markdown(f"""
-            <div class="result-card" style="margin-top:8px;">
+            <div class="result-card" style="margin-top:10px;">
                 <div class="decision-pill {pill_class}">{decision}</div>
                 <div class="result-heading">Decision: {decision}</div>
                 <div class="result-text">
@@ -759,9 +865,12 @@ with right:
 
 
 # -------------------------------------------------
-# MODEL PERFORMANCE
+# SECTION 3: MODEL PERFORMANCE
 # -------------------------------------------------
-section_title("Model Performance & Insights")
+section_header(
+    "Model Performance & Insights",
+    "Monitor classification quality and identify the most important fraud-driving features."
+)
 
 m1, m2, m3 = st.columns(3)
 
@@ -774,7 +883,7 @@ with m2:
 with m3:
     render_metric_card("F1 Score", f"{metrics['f1']:.2f}", "Balance between precision and recall")
 
-a, b = st.columns(2)
+a, b = st.columns(2, gap="large")
 
 with a:
     with st.container(border=True):
@@ -797,8 +906,8 @@ with a:
             paper_bgcolor="#FFFFFF",
             plot_bgcolor="#FFFFFF",
             font=dict(color="#0F172A", size=13),
-            margin=dict(l=60, r=25, t=10, b=55),
-            height=350
+            margin=dict(l=65, r=25, t=10, b=55),
+            height=340
         )
 
         cm_fig.update_xaxes(
@@ -827,14 +936,17 @@ with b:
             color_discrete_sequence=["#22C55E"]
         )
 
-        style_fig(fi_fig, height=350)
+        style_fig(fi_fig, height=340)
         st.plotly_chart(fi_fig, use_container_width=True, config={"displayModeBar": False})
 
 
 # -------------------------------------------------
-# SUMMARY TABLE
+# SECTION 4: FRAUD SUMMARY TABLE
 # -------------------------------------------------
-section_title("Fraud Summary Table")
+section_header(
+    "Fraud Summary Table",
+    "Merchant-level fraud summary for quick fraud operations review."
+)
 
 display_table = top_fraud_table.rename(columns={
     "merchant_category": "Merchant Category",
@@ -845,7 +957,7 @@ display_table = top_fraud_table.rename(columns={
 display_table["Average Fraud Amount"] = display_table["Average Fraud Amount"].map(lambda x: f"₹{x:,.2f}")
 
 with st.container(border=True):
-    st.markdown(preview_table_html(display_table), unsafe_allow_html=True)
+    st.markdown(html_table(display_table), unsafe_allow_html=True)
     st.markdown(
         '<div class="note-text">This table highlights the merchant categories with the highest number of fraudulent transactions.</div>',
         unsafe_allow_html=True
