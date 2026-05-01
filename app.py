@@ -24,144 +24,150 @@ st.set_page_config(
 
 
 # -------------------------------------------------
-# PREMIUM POWER BI STYLE CSS
+# CUSTOM CSS
 # -------------------------------------------------
 st.markdown("""
 <style>
     .stApp {
         background:
-            radial-gradient(circle at top right, rgba(34,197,94,0.10), transparent 30%),
-            linear-gradient(135deg, #F5F7FB 0%, #EEF3F8 100%);
+            radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 28%),
+            linear-gradient(135deg, #F4F7FB 0%, #EDF2F7 100%);
         color: #0F172A;
     }
 
     [data-testid="stHeader"] {
-        background: rgba(245, 247, 251, 0.85);
+        background: rgba(244,247,251,0.88);
         backdrop-filter: blur(14px);
     }
 
     .block-container {
-        padding-top: 1.5rem;
+        padding-top: 1.25rem;
         padding-bottom: 2rem;
         max-width: 1450px;
     }
 
-    /* ---------------- SIDEBAR POWER BI STYLE ---------------- */
+    /* -----------------------------------------
+       SIDEBAR - LIGHT POWER BI / ADMIN STYLE
+    ----------------------------------------- */
     [data-testid="stSidebar"] {
         background:
-            radial-gradient(circle at top left, rgba(34,197,94,0.22), transparent 30%),
-            linear-gradient(180deg, #0F172A 0%, #111827 48%, #020617 100%);
-        border-right: 1px solid rgba(255,255,255,0.10);
-        box-shadow: 8px 0 28px rgba(15, 23, 42, 0.22);
+            linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%) !important;
+        border-right: 1px solid #D8E0EA;
+        box-shadow: 10px 0 30px rgba(15,23,42,0.06);
     }
 
     [data-testid="stSidebar"] * {
-        color: #E5E7EB !important;
-    }
-
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3,
-    [data-testid="stSidebar"] h4 {
-        color: #FFFFFF !important;
-        font-weight: 900 !important;
+        color: #0F172A !important;
     }
 
     .sidebar-brand {
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 22px;
-        padding: 18px 16px;
+        background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
+        border: 1px solid #E2E8F0;
+        border-radius: 18px;
+        padding: 16px 16px;
         margin-bottom: 18px;
-        box-shadow: 0 16px 34px rgba(0,0,0,0.20);
+        box-shadow: 0 10px 24px rgba(15,23,42,0.06);
     }
 
     .sidebar-brand-title {
-        font-size: 1.3rem;
+        font-size: 1.22rem;
         font-weight: 900;
-        color: #FFFFFF !important;
+        color: #0F172A !important;
         margin-bottom: 4px;
     }
 
     .sidebar-brand-sub {
-        font-size: 0.85rem;
-        color: #A7F3D0 !important;
-        line-height: 1.4;
+        font-size: 0.84rem;
+        color: #64748B !important;
+        line-height: 1.45;
     }
 
     .sidebar-section-label {
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         text-transform: uppercase;
-        letter-spacing: 1.2px;
-        color: #94A3B8 !important;
+        letter-spacing: 1.25px;
+        color: #64748B !important;
         font-weight: 900;
-        margin-top: 18px;
+        margin-top: 16px;
         margin-bottom: 8px;
     }
 
-    /* Sidebar radio nav */
+    /* Sidebar navigation radio */
+    [data-testid="stSidebar"] div[role="radiogroup"] {
+        gap: 8px;
+    }
+
     [data-testid="stSidebar"] div[role="radiogroup"] label {
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.10);
+        background: #FFFFFF;
+        border: 1px solid #E2E8F0;
         border-radius: 14px;
         padding: 10px 12px;
         margin-bottom: 8px;
-        transition: all 0.22s ease;
+        box-shadow: 0 6px 16px rgba(15,23,42,0.04);
+        transition: all 0.2s ease;
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label:hover {
-        background: rgba(34,197,94,0.22);
-        border: 1px solid rgba(34,197,94,0.45);
-        transform: translateX(3px);
+        background: #F8FAFC;
+        border-color: #CBD5E1;
+        transform: translateX(2px);
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
+        background: linear-gradient(135deg, #F8FAFC 0%, #ECFDF5 100%);
+        border: 1px solid #86EFAC;
+        box-shadow: 0 12px 24px rgba(34,197,94,0.10);
+        position: relative;
+    }
+
+    [data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked)::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        bottom: 8px;
+        width: 4px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, #22C55E, #16A34A);
     }
 
     [data-testid="stSidebar"] div[role="radiogroup"] label p {
         font-weight: 800 !important;
-        color: #F8FAFC !important;
+        color: #0F172A !important;
     }
 
     /* Sidebar inputs */
     [data-testid="stSidebar"] label {
         font-weight: 700 !important;
-        color: #CBD5E1 !important;
+        color: #334155 !important;
     }
 
-    [data-testid="stNumberInput"] input {
-        background: rgba(255,255,255,0.95) !important;
-        color: #0F172A !important;
-        border: 1px solid rgba(34,197,94,0.35) !important;
+    [data-testid="stSidebar"] [data-testid="stNumberInput"] input,
+    [data-testid="stSidebar"] div[data-baseweb="select"] > div {
+        background: #FFFFFF !important;
+        border: 1px solid #CBD5E1 !important;
         border-radius: 12px !important;
-    }
-
-    [data-testid="stNumberInput"] button {
-        color: #FFFFFF !important;
-        background: rgba(255,255,255,0.08) !important;
-        border-radius: 8px !important;
-    }
-
-    div[data-baseweb="select"] > div {
-        background: rgba(255,255,255,0.96) !important;
         color: #0F172A !important;
-        border: 1px solid rgba(34,197,94,0.35) !important;
-        border-radius: 12px !important;
-        min-height: 44px !important;
+        box-shadow: 0 4px 12px rgba(15,23,42,0.03);
     }
 
-    div[data-baseweb="select"] span {
+    [data-testid="stSidebar"] div[data-baseweb="select"] span {
         color: #0F172A !important;
         font-weight: 700 !important;
     }
 
-    div[data-baseweb="select"] svg {
-        fill: #0F172A !important;
+    [data-testid="stSidebar"] div[data-baseweb="select"] svg {
+        fill: #475569 !important;
     }
 
-    [data-baseweb="popover"] * {
+    [data-testid="stSidebar"] [data-testid="stNumberInput"] button {
+        background: #EEF2F7 !important;
         color: #0F172A !important;
+        border-radius: 8px !important;
     }
 
-    [data-testid="stSlider"] span {
-        color: #E5E7EB !important;
+    [data-testid="stSidebar"] [data-testid="stSlider"] span {
+        color: #334155 !important;
     }
 
     /* Buttons */
@@ -172,28 +178,28 @@ st.markdown("""
         border-radius: 14px !important;
         padding: 0.78rem 1.15rem !important;
         font-weight: 900 !important;
-        box-shadow: 0 12px 26px rgba(34, 197, 94, 0.28);
+        box-shadow: 0 12px 26px rgba(34,197,94,0.28);
         transition: all 0.25s ease;
     }
 
     .stButton > button:hover {
         transform: translateY(-2px);
         color: white !important;
-        box-shadow: 0 20px 40px rgba(34, 197, 94, 0.36);
+        box-shadow: 0 20px 40px rgba(34,197,94,0.36);
     }
 
     /* Hero */
     .hero-card {
         background:
-            radial-gradient(circle at top right, rgba(34,197,94,0.12), transparent 30%),
+            radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 28%),
             linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%);
-        border: 1px solid #E5E7EB;
-        border-radius: 30px;
-        padding: 34px 38px;
+        border: 1px solid #E2E8F0;
+        border-radius: 28px;
+        padding: 30px 34px;
         box-shadow:
-            0 20px 50px rgba(15, 23, 42, 0.10),
-            0 0 0 1px rgba(255,255,255,0.7) inset;
-        margin-bottom: 28px;
+            0 18px 42px rgba(15,23,42,0.08),
+            0 0 26px rgba(34,197,94,0.05);
+        margin-bottom: 24px;
         position: relative;
         overflow: hidden;
     }
@@ -201,46 +207,48 @@ st.markdown("""
     .hero-card::before {
         content: "";
         position: absolute;
-        top: 0;
         left: 0;
-        width: 8px;
+        top: 0;
+        width: 6px;
         height: 100%;
         background: linear-gradient(180deg, #22C55E, #16A34A);
     }
 
     .hero-title {
-        font-size: 2.5rem;
+        font-size: 2.45rem;
         font-weight: 950;
         color: #0F172A;
         margin-bottom: 8px;
-        letter-spacing: -0.9px;
+        letter-spacing: -0.8px;
     }
 
     .hero-subtitle {
-        font-size: 1.05rem;
+        font-size: 1.02rem;
         color: #475569;
         line-height: 1.6;
     }
 
-    /* Page section */
+    /* Section header */
     .section-banner {
         background:
-            radial-gradient(circle at top right, rgba(34,197,94,0.10), transparent 30%),
+            radial-gradient(circle at top right, rgba(34,197,94,0.08), transparent 28%),
             #FFFFFF;
-        border: 1px solid #E5E7EB;
-        border-left: 8px solid #16A34A;
-        border-radius: 24px;
-        padding: 22px 26px;
-        box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+        border: 1px solid #E2E8F0;
+        border-left: 7px solid #16A34A;
+        border-radius: 22px;
+        padding: 20px 24px;
+        box-shadow:
+            0 14px 34px rgba(15,23,42,0.07),
+            0 0 18px rgba(34,197,94,0.04);
         margin-bottom: 22px;
     }
 
     .section-title {
-        font-size: 1.95rem;
+        font-size: 1.9rem;
         font-weight: 950;
         color: #0F172A;
-        margin-bottom: 5px;
-        letter-spacing: -0.5px;
+        margin-bottom: 4px;
+        letter-spacing: -0.4px;
     }
 
     .section-subtitle {
@@ -251,17 +259,17 @@ st.markdown("""
 
     /* KPI Cards */
     .metric-card {
-        background: #FFFFFF;
-        border: 1px solid #E5E7EB;
-        border-radius: 26px;
-        padding: 24px 24px;
+        background: linear-gradient(135deg, #FFFFFF 0%, #FCFDFE 100%);
+        border: 1px solid #E2E8F0;
+        border-radius: 24px;
+        padding: 24px;
         box-shadow:
-            0 18px 42px rgba(15, 23, 42, 0.10),
-            0 0 30px rgba(34,197,94,0.05);
-        min-height: 155px;
-        transition: all 0.25s ease;
+            0 18px 36px rgba(15,23,42,0.08),
+            0 0 28px rgba(34,197,94,0.04);
+        min-height: 150px;
         position: relative;
         overflow: hidden;
+        transition: all 0.25s ease;
     }
 
     .metric-card::before {
@@ -270,15 +278,15 @@ st.markdown("""
         left: 0;
         top: 0;
         height: 100%;
-        width: 6px;
+        width: 5px;
         background: linear-gradient(180deg, #22C55E, #16A34A);
     }
 
     .metric-card:hover {
-        transform: translateY(-4px);
+        transform: translateY(-3px);
         box-shadow:
-            0 24px 54px rgba(15, 23, 42, 0.16),
-            0 0 34px rgba(34,197,94,0.13);
+            0 24px 48px rgba(15,23,42,0.12),
+            0 0 30px rgba(34,197,94,0.08);
     }
 
     .metric-label {
@@ -289,7 +297,7 @@ st.markdown("""
     }
 
     .metric-value {
-        font-size: 2.28rem;
+        font-size: 2.2rem;
         font-weight: 950;
         color: #0F172A;
         margin-bottom: 10px;
@@ -301,31 +309,31 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Chart Cards */
+    /* Container / chart cards pop */
     div[data-testid="stVerticalBlockBorderWrapper"] {
         background: #FFFFFF !important;
-        border: 1px solid #E5E7EB !important;
-        border-radius: 28px !important;
+        border: 1px solid #E2E8F0 !important;
+        border-radius: 26px !important;
         box-shadow:
-            0 18px 42px rgba(15, 23, 42, 0.10),
-            0 0 28px rgba(34,197,94,0.06) !important;
-        padding: 1.2rem 1.2rem 1.3rem 1.2rem !important;
-        margin-bottom: 26px !important;
-        transition: all 0.25s ease-in-out !important;
+            0 18px 38px rgba(15,23,42,0.08),
+            0 0 20px rgba(34,197,94,0.05) !important;
+        padding: 1.15rem 1.15rem 1.25rem 1.15rem !important;
+        margin-bottom: 24px !important;
+        transition: all 0.25s ease !important;
     }
 
     div[data-testid="stVerticalBlockBorderWrapper"]:hover {
         transform: translateY(-3px);
         box-shadow:
-            0 24px 56px rgba(15, 23, 42, 0.15),
-            0 0 38px rgba(34,197,94,0.12) !important;
+            0 24px 50px rgba(15,23,42,0.12),
+            0 0 28px rgba(34,197,94,0.08) !important;
     }
 
     .card-title {
-        font-size: 1.24rem;
+        font-size: 1.22rem;
         font-weight: 950;
         color: #0F172A;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
     }
 
     .card-sub {
@@ -335,24 +343,22 @@ st.markdown("""
         line-height: 1.5;
     }
 
-    /* Result */
+    /* Result cards */
     .result-card {
-        background:
-            radial-gradient(circle at top right, rgba(34,197,94,0.12), transparent 28%),
-            #FFFFFF;
-        border: 1px solid #E5E7EB;
-        border-radius: 24px;
+        background: linear-gradient(135deg, #FFFFFF 0%, #FCFDFE 100%);
+        border: 1px solid #E2E8F0;
+        border-radius: 22px;
         padding: 22px;
         box-shadow:
-            0 16px 38px rgba(15, 23, 42, 0.10),
-            0 0 24px rgba(34,197,94,0.06);
+            0 14px 34px rgba(15,23,42,0.08),
+            0 0 18px rgba(34,197,94,0.04);
     }
 
     .decision-pill {
         display: inline-block;
         padding: 7px 14px;
         border-radius: 999px;
-        font-size: 0.84rem;
+        font-size: 0.83rem;
         font-weight: 950;
         margin-bottom: 14px;
     }
@@ -373,7 +379,7 @@ st.markdown("""
     }
 
     .result-heading {
-        font-size: 1.75rem;
+        font-size: 1.7rem;
         font-weight: 950;
         color: #0F172A;
         margin-bottom: 10px;
@@ -387,8 +393,8 @@ st.markdown("""
 
     .risk-factor-box {
         background: #F8FAFC;
-        border: 1px solid #E5E7EB;
-        border-radius: 18px;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
         padding: 14px 16px;
         margin-top: 12px;
     }
@@ -426,7 +432,7 @@ st.markdown("""
         background: #FFFFFF;
         border-radius: 18px;
         overflow: hidden;
-        border: 1px solid #E5E7EB;
+        border: 1px solid #E2E8F0;
     }
 
     .custom-table th {
@@ -435,7 +441,7 @@ st.markdown("""
         text-align: left;
         padding: 13px 15px;
         font-weight: 950;
-        border-bottom: 1px solid #E5E7EB;
+        border-bottom: 1px solid #E2E8F0;
         font-size: 0.9rem;
         white-space: nowrap;
     }
@@ -454,7 +460,7 @@ st.markdown("""
     }
 
     .preview-table {
-        min-width: 980px;
+        min-width: 1000px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -721,7 +727,7 @@ model, df, metrics, feature_importance_df = train_model()
 
 
 # -------------------------------------------------
-# SIDEBAR NAVIGATION
+# SIDEBAR
 # -------------------------------------------------
 st.sidebar.markdown("""
 <div class="sidebar-brand">
@@ -901,6 +907,16 @@ def show_kpis():
 
 
 # -------------------------------------------------
+# SESSION STATE
+# -------------------------------------------------
+if "prediction_result" not in st.session_state:
+    st.session_state.prediction_result = None
+
+if "prediction_signature" not in st.session_state:
+    st.session_state.prediction_signature = None
+
+
+# -------------------------------------------------
 # PAGE: DASHBOARD OVERVIEW
 # -------------------------------------------------
 if page == "🏠 Dashboard Overview":
@@ -1025,14 +1041,8 @@ elif page == "📊 Fraud Analytics":
 elif page == "⚡ Live Scoring":
     section_header(
         "Live Transaction Scoring",
-        "Enter transaction details, then click Predict Fraud Risk. Score will not update until the button is clicked again."
+        "Enter transaction details and click Predict Fraud Risk. The score updates only after clicking the button."
     )
-
-    if "prediction_result" not in st.session_state:
-        st.session_state.prediction_result = None
-
-    if "prediction_signature" not in st.session_state:
-        st.session_state.prediction_signature = None
 
     left, right = st.columns([1.12, 1], gap="large")
 
@@ -1082,7 +1092,7 @@ elif page == "⚡ Live Scoring":
                 <div class="result-card" style="box-shadow:none; border:none; padding:8px 0;">
                     <div class="result-heading" style="font-size:1.5rem;">No prediction yet</div>
                     <div class="result-text">
-                        Fill the transaction details and click <b>Predict Fraud Risk</b> to generate a decision.
+                        Fill the transaction details and click <b>Predict Fraud Risk</b> to generate a fraud decision.
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1093,7 +1103,7 @@ elif page == "⚡ Live Scoring":
                     <div class="decision-pill pill-review">INPUTS CHANGED</div>
                     <div class="result-heading" style="font-size:1.5rem;">Click Predict Fraud Risk again</div>
                     <div class="result-text">
-                        You changed the transaction values. The previous score is outdated.
+                        You changed the transaction inputs. The previous prediction is now outdated.
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -1101,6 +1111,12 @@ elif page == "⚡ Live Scoring":
             else:
                 result = st.session_state.prediction_result
                 probability = result["probability"]
+                decision = result["decision"]
+                pill_class = result["pill_class"]
+                pred_label = result["pred_label"]
+                risk_factors = result["risk_factors"]
+                model_probability = result["model_probability"]
+                business_probability = result["business_probability"]
 
                 gauge = go.Figure(go.Indicator(
                     mode="gauge+number",
@@ -1118,7 +1134,7 @@ elif page == "⚡ Live Scoring":
                         "bar": {"color": "#16A34A", "thickness": 0.34},
                         "bgcolor": "white",
                         "borderwidth": 1,
-                        "bordercolor": "#E5E7EB",
+                        "bordercolor": "#E2E8F0",
                         "steps": [
                             {"range": [0, 40], "color": "#DCFCE7"},
                             {"range": [40, 70], "color": "#FEF3C7"},
@@ -1140,22 +1156,22 @@ elif page == "⚡ Live Scoring":
 
                 st.markdown(f"""
                 <div class="result-card" style="margin-top:10px;">
-                    <div class="decision-pill {result["pill_class"]}">{result["decision"]}</div>
-                    <div class="result-heading">Decision: {result["decision"]}</div>
+                    <div class="decision-pill {pill_class}">{decision}</div>
+                    <div class="result-heading">Decision: {decision}</div>
                     <div class="result-text">
-                        Final fraud probability is <b>{result["probability"]:.2%}</b>. 
-                        Prediction label: <b>{result["pred_label"]}</b>.
+                        Final fraud probability is <b>{probability:.2%}</b>. 
+                        Prediction label: <b>{pred_label}</b>.
                     </div>
                     <div class="risk-factor-box">
                         <div class="risk-factor-title">Top Risk Signals</div>
-                        <div class="risk-factor-text">{", ".join(result["risk_factors"][:5])}</div>
+                        <div class="risk-factor-text">{", ".join(risk_factors[:5])}</div>
                     </div>
                     <div class="risk-factor-box">
                         <div class="risk-factor-title">Score Breakdown</div>
                         <div class="risk-factor-text">
-                            ML probability: <b>{result["model_probability"]:.2%}</b><br>
-                            Business-risk probability: <b>{result["business_probability"]:.2%}</b><br>
-                            Final blended score: <b>{result["probability"]:.2%}</b>
+                            ML probability: <b>{model_probability:.2%}</b><br>
+                            Business-risk probability: <b>{business_probability:.2%}</b><br>
+                            Final blended score: <b>{probability:.2%}</b>
                         </div>
                     </div>
                 </div>
