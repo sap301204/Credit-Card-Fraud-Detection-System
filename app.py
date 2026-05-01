@@ -11,6 +11,7 @@ from sklearn.metrics import precision_score, recall_score, f1_score, confusion_m
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline as ImbPipeline
 
+
 # -------------------------------------------------
 # Page Config
 # -------------------------------------------------
@@ -21,31 +22,55 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+
 # -------------------------------------------------
 # Premium White Theme CSS
 # -------------------------------------------------
 st.markdown("""
 <style>
+    html, body, [class*="css"] {
+        color: #0F172A !important;
+        font-family: "Inter", "Segoe UI", sans-serif;
+    }
+
     .stApp {
-        background-color: #F4F6FA;
+        background-color: #F4F6FA !important;
+        color: #0F172A !important;
     }
 
     .main > div {
         padding-top: 1.2rem;
     }
 
+    h1, h2, h3, h4, h5, h6,
+    p, span, label, div {
+        color: #0F172A;
+    }
+
+    [data-testid="stHeader"] {
+        background: rgba(244, 246, 250, 0.95);
+    }
+
+    [data-testid="stToolbar"] {
+        right: 2rem;
+    }
+
     [data-testid="stSidebar"] {
-        background: #EEF2F7;
+        background: #EAF0F7 !important;
         border-right: 1px solid #D9E0EA;
     }
 
-    [data-testid="stSidebar"] h1,
-    [data-testid="stSidebar"] h2,
-    [data-testid="stSidebar"] h3,
-    [data-testid="stSidebar"] label,
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] span {
-        color: #111827 !important;
+    [data-testid="stSidebar"] * {
+        color: #0F172A !important;
+    }
+
+    [data-testid="stSidebar"] input,
+    [data-testid="stSidebar"] select,
+    [data-testid="stSidebar"] textarea {
+        background-color: #FFFFFF !important;
+        color: #0F172A !important;
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 12px !important;
     }
 
     .hero-box {
@@ -60,13 +85,13 @@ st.markdown("""
     .hero-title {
         font-size: 2.35rem;
         font-weight: 800;
-        color: #0F172A;
+        color: #0F172A !important;
         margin-bottom: 6px;
     }
 
     .hero-subtitle {
         font-size: 1.02rem;
-        color: #64748B;
+        color: #475569 !important;
     }
 
     .metric-card {
@@ -79,36 +104,43 @@ st.markdown("""
     }
 
     .metric-title {
-        color: #6B7280;
+        color: #475569 !important;
         font-size: 0.95rem;
         font-weight: 700;
         margin-bottom: 10px;
     }
 
     .metric-value {
-        color: #0F172A;
+        color: #0F172A !important;
         font-size: 2.15rem;
         font-weight: 800;
         margin-bottom: 8px;
     }
 
     .metric-sub {
-        color: #64748B;
+        color: #475569 !important;
         font-size: 0.9rem;
     }
 
     .section-title {
         font-size: 1.85rem;
         font-weight: 800;
-        color: #0F172A;
-        margin-top: 10px;
+        color: #0F172A !important;
+        margin-top: 26px;
+        margin-bottom: 16px;
+    }
+
+    .subsection-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #0F172A !important;
         margin-bottom: 12px;
     }
 
     .subtle-note {
-        color: #64748B;
+        color: #475569 !important;
         font-size: 0.92rem;
-        margin-top: 6px;
+        margin-top: 12px;
     }
 
     .result-card {
@@ -130,29 +162,29 @@ st.markdown("""
 
     .allow-pill {
         background: #DCFCE7;
-        color: #166534;
+        color: #166534 !important;
     }
 
     .review-pill {
         background: #FEF3C7;
-        color: #92400E;
+        color: #92400E !important;
     }
 
     .block-pill {
         background: #FEE2E2;
-        color: #991B1B;
+        color: #991B1B !important;
     }
 
     .result-title {
         font-size: 1.7rem;
         font-weight: 800;
-        color: #0F172A;
+        color: #0F172A !important;
         margin-bottom: 8px;
     }
 
     .result-text {
         font-size: 1rem;
-        color: #475569;
+        color: #475569 !important;
         line-height: 1.6;
     }
 
@@ -168,17 +200,18 @@ st.markdown("""
 
     .custom-table th {
         background: #F8FAFC;
-        color: #334155;
+        color: #0F172A !important;
         text-align: left;
         padding: 14px;
-        font-weight: 700;
+        font-weight: 800;
         border-bottom: 1px solid #E5E7EB;
     }
 
     .custom-table td {
         padding: 14px;
         border-bottom: 1px solid #EEF2F7;
-        color: #0F172A;
+        color: #0F172A !important;
+        font-weight: 500;
     }
 
     .custom-table tr:last-child td {
@@ -186,8 +219,8 @@ st.markdown("""
     }
 
     .stButton > button {
-        background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
-        color: white;
+        background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !important;
+        color: white !important;
         border: none;
         border-radius: 12px;
         padding: 0.75rem 1rem;
@@ -199,16 +232,22 @@ st.markdown("""
     .stButton > button:hover {
         transform: translateY(-1px);
         box-shadow: 0 8px 18px rgba(34, 197, 94, 0.18);
-        color: white;
+        color: white !important;
     }
 
     div[data-testid="stDataFrame"] {
         border: 1px solid #E5E7EB;
         border-radius: 16px;
         overflow: hidden;
+        background: #FFFFFF !important;
+    }
+
+    .stDataFrame {
+        color: #0F172A !important;
     }
 </style>
 """, unsafe_allow_html=True)
+
 
 # -------------------------------------------------
 # Model Training
@@ -257,7 +296,8 @@ def train_model():
     ])
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y,
+        X,
+        y,
         test_size=0.20,
         random_state=42,
         stratify=y
@@ -289,30 +329,38 @@ def train_model():
 
 model, df, metrics, feature_importance_df = train_model()
 
+
 # -------------------------------------------------
 # Plotly Styling Helper
 # -------------------------------------------------
 def style_fig(fig, height=360):
     fig.update_layout(
         template="plotly_white",
-        paper_bgcolor="white",
-        plot_bgcolor="white",
-        font=dict(color="#334155", size=13),
-        title_font=dict(size=16, color="#0F172A"),
-        margin=dict(l=20, r=20, t=50, b=20),
+        paper_bgcolor="#FFFFFF",
+        plot_bgcolor="#FFFFFF",
+        font=dict(color="#0F172A", size=13),
+        title_font=dict(size=17, color="#0F172A"),
+        margin=dict(l=55, r=35, t=60, b=60),
         height=height,
         legend_title_text=""
     )
+
     fig.update_xaxes(
         showgrid=False,
-        linecolor="#D1D5DB",
-        tickfont=dict(color="#475569")
+        linecolor="#CBD5E1",
+        tickfont=dict(color="#334155", size=12),
+        title_font=dict(color="#334155", size=13)
     )
+
     fig.update_yaxes(
         gridcolor="#E5E7EB",
-        linecolor="#D1D5DB",
-        tickfont=dict(color="#475569")
+        linecolor="#CBD5E1",
+        tickfont=dict(color="#334155", size=12),
+        title_font=dict(color="#334155", size=13)
     )
+
+    fig.update_traces(marker_line_width=0)
+
     return fig
 
 
@@ -345,9 +393,20 @@ is_international = st.sidebar.selectbox(
     [0, 1]
 )
 
-previous_tx_count = st.sidebar.number_input("Previous Transaction Count", min_value=0, value=18)
-velocity_amount = st.sidebar.number_input("Velocity Amount", min_value=0.0, value=120000.0)
+previous_tx_count = st.sidebar.number_input(
+    "Previous Transaction Count",
+    min_value=0,
+    value=18
+)
+
+velocity_amount = st.sidebar.number_input(
+    "Velocity Amount",
+    min_value=0.0,
+    value=120000.0
+)
+
 is_night = 1 if hour < 6 or hour >= 22 else 0
+
 
 # -------------------------------------------------
 # Dashboard Metrics
@@ -357,10 +416,16 @@ fraud_tx = int(df["is_fraud"].sum())
 fraud_rate = df["is_fraud"].mean() * 100
 fraud_amount = df[df["is_fraud"] == 1]["amount"].sum()
 
+
 # -------------------------------------------------
 # Charts Data
 # -------------------------------------------------
-hour_df = df[df["is_fraud"] == 1].groupby("hour").size().reset_index(name="Fraud Transactions")
+hour_df = (
+    df[df["is_fraud"] == 1]
+    .groupby("hour")
+    .size()
+    .reset_index(name="Fraud Transactions")
+)
 
 merchant_df = (
     df.groupby("merchant_category")["is_fraud"]
@@ -395,6 +460,7 @@ top_fraud_table = (
     .sort_values("Fraud_Transactions", ascending=False)
 )
 
+
 # -------------------------------------------------
 # Header
 # -------------------------------------------------
@@ -406,6 +472,7 @@ st.markdown("""
     </div>
 </div>
 """, unsafe_allow_html=True)
+
 
 # -------------------------------------------------
 # KPI Cards
@@ -447,6 +514,7 @@ with c4:
         <div class="metric-sub">Total value of fraudulent transactions</div>
     </div>
     """, unsafe_allow_html=True)
+
 
 # -------------------------------------------------
 # Fraud Analytics Overview
@@ -503,6 +571,7 @@ with col4:
     style_fig(fig_device)
     st.plotly_chart(fig_device, use_container_width=True, config={"displayModeBar": False})
 
+
 # -------------------------------------------------
 # Live Transaction Scoring
 # -------------------------------------------------
@@ -527,7 +596,11 @@ if "prediction_result" not in st.session_state:
 left, right = st.columns([1.2, 1])
 
 with left:
-    st.subheader("Transaction Preview")
+    st.markdown(
+        '<div class="subsection-title">Transaction Preview</div>',
+        unsafe_allow_html=True
+    )
+
     st.dataframe(transaction, use_container_width=True, hide_index=True)
 
     if st.button("Predict Fraud Risk"):
@@ -573,25 +646,29 @@ with right:
         gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=prob * 100,
-            number={'suffix': "%"},
-            title={'text': "Fraud Risk Score"},
+            number={"suffix": "%"},
+            title={"text": "Fraud Risk Score"},
             gauge={
-                'axis': {'range': [0, 100]},
-                'bar': {'color': "#16A34A"},
-                'steps': [
-                    {'range': [0, 40], 'color': "#DCFCE7"},
-                    {'range': [40, 70], 'color': "#FEF3C7"},
-                    {'range': [70, 100], 'color': "#FEE2E2"}
+                "axis": {"range": [0, 100]},
+                "bar": {"color": "#16A34A"},
+                "steps": [
+                    {"range": [0, 40], "color": "#DCFCE7"},
+                    {"range": [40, 70], "color": "#FEF3C7"},
+                    {"range": [70, 100], "color": "#FEE2E2"}
                 ]
             }
         ))
+
         gauge.update_layout(
             template="plotly_white",
-            paper_bgcolor="white",
-            height=320,
-            margin=dict(l=20, r=20, t=60, b=20),
-            font=dict(color="#334155")
+            paper_bgcolor="#FFFFFF",
+            plot_bgcolor="#FFFFFF",
+            height=360,
+            margin=dict(l=35, r=35, t=70, b=30),
+            font=dict(color="#0F172A", size=13),
+            title_font=dict(color="#0F172A", size=17)
         )
+
         st.plotly_chart(gauge, use_container_width=True, config={"displayModeBar": False})
 
         st.markdown(f"""
@@ -603,6 +680,7 @@ with right:
             </div>
         </div>
         """, unsafe_allow_html=True)
+
 
 # -------------------------------------------------
 # Model Performance
@@ -642,6 +720,7 @@ a, b = st.columns(2)
 
 with a:
     cm = metrics["cm"]
+
     cm_fig = go.Figure(data=go.Heatmap(
         z=cm,
         x=["Predicted Genuine", "Predicted Fraud"],
@@ -651,16 +730,28 @@ with a:
         texttemplate="%{text}",
         showscale=False
     ))
+
     cm_fig.update_layout(
         title="Confusion Matrix",
         template="plotly_white",
-        paper_bgcolor="white",
-        plot_bgcolor="white",
-        font=dict(color="#334155"),
-        title_font=dict(color="#0F172A", size=16),
+        paper_bgcolor="#FFFFFF",
+        plot_bgcolor="#FFFFFF",
+        font=dict(color="#0F172A", size=13),
+        title_font=dict(color="#0F172A", size=17),
         height=360,
-        margin=dict(l=20, r=20, t=50, b=20)
+        margin=dict(l=55, r=35, t=60, b=60)
     )
+
+    cm_fig.update_xaxes(
+        tickfont=dict(color="#334155", size=12),
+        title_font=dict(color="#334155", size=13)
+    )
+
+    cm_fig.update_yaxes(
+        tickfont=dict(color="#334155", size=12),
+        title_font=dict(color="#334155", size=13)
+    )
+
     st.plotly_chart(cm_fig, use_container_width=True, config={"displayModeBar": False})
 
 with b:
@@ -672,21 +763,28 @@ with b:
         title="Top Feature Importance",
         color_discrete_sequence=["#22C55E"]
     )
+
     style_fig(fi_fig)
     st.plotly_chart(fi_fig, use_container_width=True, config={"displayModeBar": False})
+
 
 # -------------------------------------------------
 # Fraud Summary Table
 # -------------------------------------------------
 st.markdown('<div class="section-title">Fraud Summary Table</div>', unsafe_allow_html=True)
 
-table_html = top_fraud_table.rename(columns={
+display_table = top_fraud_table.rename(columns={
     "merchant_category": "Merchant Category",
     "Fraud_Transactions": "Fraud Transactions",
     "Average_Fraud_Amount": "Average Fraud Amount"
-}).to_html(index=False, classes="custom-table")
+})
+
+display_table["Average Fraud Amount"] = display_table["Average Fraud Amount"].round(2)
+
+table_html = display_table.to_html(index=False, classes="custom-table")
 
 st.markdown(table_html, unsafe_allow_html=True)
+
 st.markdown(
     '<div class="subtle-note">This table highlights the merchant categories with the highest number of fraudulent transactions.</div>',
     unsafe_allow_html=True
