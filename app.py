@@ -490,6 +490,62 @@ st.markdown("""
     .preview-table {
         min-width: 1000px;
     }
+    
+/* REMOVE DEFAULT RADIO CIRCLE COMPLETELY */
+[data-testid="stSidebar"] div[role="radiogroup"] input[type="radio"] {
+    display: none !important;
+}
+
+/* Hide Streamlit/BaseWeb radio circle wrapper */
+[data-testid="stSidebar"] div[role="radiogroup"] label > div:first-child {
+    display: none !important;
+}
+
+/* Sidebar nav card design */
+[data-testid="stSidebar"] div[role="radiogroup"] label {
+    background: #FFFFFF !important;
+    border: 1px solid #E2E8F0 !important;
+    border-radius: 14px !important;
+    padding: 11px 14px !important;
+    margin-bottom: 9px !important;
+    box-shadow: 0 6px 16px rgba(15,23,42,0.04) !important;
+    transition: all 0.22s ease !important;
+    cursor: pointer !important;
+}
+
+/* Hover effect */
+[data-testid="stSidebar"] div[role="radiogroup"] label:hover {
+    background: #F8FAFC !important;
+    border-color: #CBD5E1 !important;
+    transform: translateX(2px);
+}
+
+/* Active selected navigation item */
+[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked) {
+    background: linear-gradient(135deg, #F8FAFC 0%, #ECFDF5 100%) !important;
+    border: 1px solid #86EFAC !important;
+    box-shadow: 0 12px 24px rgba(34,197,94,0.12) !important;
+    position: relative !important;
+}
+
+/* Green active bar only */
+[data-testid="stSidebar"] div[role="radiogroup"] label:has(input:checked)::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    bottom: 9px;
+    width: 4px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #22C55E, #16A34A);
+}
+
+/* Nav text */
+[data-testid="stSidebar"] div[role="radiogroup"] label p {
+    font-weight: 850 !important;
+    color: #0F172A !important;
+    margin-left: 0 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
