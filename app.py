@@ -9,7 +9,7 @@ st.set_page_config(
     layout="wide"
 )
 
-model = joblib.load("models/fraud_model.pkl")
+model = joblib.load("fraud_model.pkl")
 
 st.title("💳 Credit Card Fraud Detection System")
 st.write("ML-powered fraud detection dashboard using SMOTE and Random Forest.")
