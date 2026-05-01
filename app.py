@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
@@ -8,16 +7,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    precision_score,
-    recall_score,
-    f1_score,
-    confusion_matrix,
-)
+from sklearn.metrics import precision_score, recall_score, f1_score, confusion_matrix
 from imblearn.over_sampling import SMOTE
 from imblearn.pipeline import Pipeline as ImbPipeline
 
-
+# -------------------------------------------------
+# Page Config
+# -------------------------------------------------
 st.set_page_config(
     page_title="Credit Card Fraud Detection Dashboard",
     page_icon="💳",
@@ -25,220 +21,198 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-
-# -----------------------------
-# Custom CSS for premium white UI
-# -----------------------------
+# -------------------------------------------------
+# Premium White Theme CSS
+# -------------------------------------------------
 st.markdown("""
 <style>
-:root {
-    --bg: #F5F7FB;
-    --card: #FFFFFF;
-    --text: #111827;
-    --muted: #6B7280;
-    --line: #E5E7EB;
-    --accent: #22C55E;
-    --accent-dark: #16A34A;
-    --warning: #F59E0B;
-    --danger: #EF4444;
-    --shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
-    --radius: 20px;
-}
+    .stApp {
+        background-color: #F4F6FA;
+    }
 
-.stApp {
-    background-color: var(--bg);
-}
+    .main > div {
+        padding-top: 1.2rem;
+    }
 
-.block-container {
-    max-width: 1450px;
-    padding-top: 1.8rem;
-    padding-bottom: 2rem;
-}
+    [data-testid="stSidebar"] {
+        background: #EEF2F7;
+        border-right: 1px solid #D9E0EA;
+    }
 
-[data-testid="stSidebar"] {
-    background: #EEF2F7;
-    border-right: 1px solid var(--line);
-}
+    [data-testid="stSidebar"] h1,
+    [data-testid="stSidebar"] h2,
+    [data-testid="stSidebar"] h3,
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span {
+        color: #111827 !important;
+    }
 
-[data-testid="stSidebar"] h1,
-[data-testid="stSidebar"] h2,
-[data-testid="stSidebar"] h3,
-[data-testid="stSidebar"] label,
-[data-testid="stSidebar"] p {
-    color: var(--text) !important;
-}
+    .hero-box {
+        background: #FFFFFF;
+        border-radius: 22px;
+        padding: 28px 30px;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+        border: 1px solid #E5E7EB;
+        margin-bottom: 20px;
+    }
 
-.hero-card {
-    background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 1.6rem 1.8rem;
-    box-shadow: var(--shadow);
-    margin-bottom: 1rem;
-}
+    .hero-title {
+        font-size: 2.35rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin-bottom: 6px;
+    }
 
-.hero-title {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--text);
-    margin-bottom: 0.3rem;
-}
+    .hero-subtitle {
+        font-size: 1.02rem;
+        color: #64748B;
+    }
 
-.hero-sub {
-    font-size: 1rem;
-    color: var(--muted);
-    margin-top: 0.3rem;
-}
+    .metric-card {
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 22px 22px;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+        border: 1px solid #E5E7EB;
+        min-height: 140px;
+    }
 
-.metric-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 1rem 1.2rem;
-    box-shadow: var(--shadow);
-    min-height: 120px;
-}
+    .metric-title {
+        color: #6B7280;
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
 
-.metric-label {
-    color: var(--muted);
-    font-size: 0.92rem;
-    font-weight: 600;
-}
+    .metric-value {
+        color: #0F172A;
+        font-size: 2.15rem;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
 
-.metric-value {
-    color: var(--text);
-    font-size: 2rem;
-    font-weight: 800;
-    margin-top: 0.35rem;
-}
+    .metric-sub {
+        color: #64748B;
+        font-size: 0.9rem;
+    }
 
-.metric-sub {
-    color: var(--muted);
-    font-size: 0.82rem;
-    margin-top: 0.3rem;
-}
+    .section-title {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin-top: 10px;
+        margin-bottom: 12px;
+    }
 
-.section-heading {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--text);
-    margin-top: 1.3rem;
-    margin-bottom: 0.8rem;
-}
+    .subtle-note {
+        color: #64748B;
+        font-size: 0.92rem;
+        margin-top: 6px;
+    }
 
-.chart-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 1rem;
-    box-shadow: var(--shadow);
-    margin-bottom: 1rem;
-}
+    .result-card {
+        background: #FFFFFF;
+        border-radius: 22px;
+        padding: 22px;
+        border: 1px solid #E5E7EB;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
 
-.result-card {
-    background: #FFFFFF;
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    padding: 1.2rem 1.2rem;
-    box-shadow: var(--shadow);
-}
+    .decision-pill {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
 
-.result-pill {
-    display: inline-block;
-    padding: 0.4rem 0.8rem;
-    border-radius: 999px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    margin-bottom: 0.7rem;
-}
+    .allow-pill {
+        background: #DCFCE7;
+        color: #166534;
+    }
 
-.allow {
-    background: #DCFCE7;
-    color: #166534;
-}
+    .review-pill {
+        background: #FEF3C7;
+        color: #92400E;
+    }
 
-.review {
-    background: #FEF3C7;
-    color: #92400E;
-}
+    .block-pill {
+        background: #FEE2E2;
+        color: #991B1B;
+    }
 
-.block {
-    background: #FEE2E2;
-    color: #991B1B;
-}
+    .result-title {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #0F172A;
+        margin-bottom: 8px;
+    }
 
-.result-title {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: var(--text);
-}
+    .result-text {
+        font-size: 1rem;
+        color: #475569;
+        line-height: 1.6;
+    }
 
-.result-sub {
-    color: var(--muted);
-    font-size: 0.95rem;
-}
+    .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #FFFFFF;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #E5E7EB;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.05);
+    }
 
-.small-note {
-    color: var(--muted);
-    font-size: 0.88rem;
-}
+    .custom-table th {
+        background: #F8FAFC;
+        color: #334155;
+        text-align: left;
+        padding: 14px;
+        font-weight: 700;
+        border-bottom: 1px solid #E5E7EB;
+    }
 
-.stButton > button {
-    background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 0.65rem 1rem;
-    font-weight: 700;
-    width: 100%;
-}
+    .custom-table td {
+        padding: 14px;
+        border-bottom: 1px solid #EEF2F7;
+        color: #0F172A;
+    }
 
-.stButton > button:hover {
-    background: linear-gradient(135deg, #16A34A 0%, #15803D 100%);
-    color: white;
-}
+    .custom-table tr:last-child td {
+        border-bottom: none;
+    }
 
-hr {
-    border: none;
-    border-top: 1px solid var(--line);
-    margin: 1.2rem 0;
-}
+    .stButton > button {
+        background: linear-gradient(135deg, #22C55E 0%, #16A34A 100%);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        font-weight: 800;
+        width: 100%;
+        transition: 0.2s ease-in-out;
+    }
+
+    .stButton > button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(34, 197, 94, 0.18);
+        color: white;
+    }
+
+    div[data-testid="stDataFrame"] {
+        border: 1px solid #E5E7EB;
+        border-radius: 16px;
+        overflow: hidden;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-
-# -----------------------------
-# Helpers
-# -----------------------------
-def metric_card(title, value, subtext=""):
-    st.markdown(
-        f"""
-        <div class="metric-card">
-            <div class="metric-label">{title}</div>
-            <div class="metric-value">{value}</div>
-            <div class="metric-sub">{subtext}</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-def style_fig(fig, height=320):
-    fig.update_layout(
-        template="plotly_white",
-        paper_bgcolor="white",
-        plot_bgcolor="white",
-        height=height,
-        margin=dict(l=20, r=20, t=50, b=20),
-        font=dict(color="#111827"),
-        title_font=dict(size=18, color="#111827"),
-        legend_title_text=""
-    )
-    fig.update_xaxes(showgrid=False, linecolor="#E5E7EB")
-    fig.update_yaxes(gridcolor="#EEF2F7", zerolinecolor="#EEF2F7")
-    return fig
-
-
+# -------------------------------------------------
+# Model Training
+# -------------------------------------------------
 @st.cache_resource
 def train_model():
     df = pd.read_csv("transactions.csv")
@@ -290,42 +264,61 @@ def train_model():
     )
 
     pipeline.fit(X_train, y_train)
-
     y_pred = pipeline.predict(X_test)
-    y_prob = pipeline.predict_proba(X_test)[:, 1]
 
-    precision = precision_score(y_test, y_pred)
-    recall = recall_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred)
-    cm = confusion_matrix(y_test, y_pred)
+    metrics = {
+        "precision": precision_score(y_test, y_pred),
+        "recall": recall_score(y_test, y_pred),
+        "f1": f1_score(y_test, y_pred),
+        "cm": confusion_matrix(y_test, y_pred)
+    }
 
-    # Feature importance
     rf_model = pipeline.named_steps["classifier"]
     encoder = pipeline.named_steps["preprocessor"].named_transformers_["cat"]
     encoded_cat_features = encoder.get_feature_names_out(categorical_features)
-    feature_names = numeric_features + list(encoded_cat_features)
+
+    all_feature_names = numeric_features + list(encoded_cat_features)
 
     feature_importance_df = pd.DataFrame({
-        "Feature": feature_names,
+        "Feature": all_feature_names,
         "Importance": rf_model.feature_importances_
-    }).sort_values("Importance", ascending=False).head(12)
-
-    metrics = {
-        "precision": precision,
-        "recall": recall,
-        "f1": f1,
-        "confusion_matrix": cm
-    }
+    }).sort_values(by="Importance", ascending=False).head(12)
 
     return pipeline, df, metrics, feature_importance_df
 
 
 model, df, metrics, feature_importance_df = train_model()
 
+# -------------------------------------------------
+# Plotly Styling Helper
+# -------------------------------------------------
+def style_fig(fig, height=360):
+    fig.update_layout(
+        template="plotly_white",
+        paper_bgcolor="white",
+        plot_bgcolor="white",
+        font=dict(color="#334155", size=13),
+        title_font=dict(size=16, color="#0F172A"),
+        margin=dict(l=20, r=20, t=50, b=20),
+        height=height,
+        legend_title_text=""
+    )
+    fig.update_xaxes(
+        showgrid=False,
+        linecolor="#D1D5DB",
+        tickfont=dict(color="#475569")
+    )
+    fig.update_yaxes(
+        gridcolor="#E5E7EB",
+        linecolor="#D1D5DB",
+        tickfont=dict(color="#475569")
+    )
+    return fig
 
-# -----------------------------
-# Sidebar
-# -----------------------------
+
+# -------------------------------------------------
+# Sidebar Inputs
+# -------------------------------------------------
 st.sidebar.markdown("## Enter Transaction Details")
 
 amount = st.sidebar.number_input("Transaction Amount", min_value=0.0, value=75000.0)
@@ -352,30 +345,23 @@ is_international = st.sidebar.selectbox(
     [0, 1]
 )
 
-previous_tx_count = st.sidebar.number_input(
-    "Previous Transaction Count",
-    min_value=0,
-    value=18
-)
-
-velocity_amount = st.sidebar.number_input(
-    "Velocity Amount",
-    min_value=0.0,
-    value=120000.0
-)
-
+previous_tx_count = st.sidebar.number_input("Previous Transaction Count", min_value=0, value=18)
+velocity_amount = st.sidebar.number_input("Velocity Amount", min_value=0.0, value=120000.0)
 is_night = 1 if hour < 6 or hour >= 22 else 0
 
-
-# -----------------------------
-# Derived analytics
-# -----------------------------
+# -------------------------------------------------
+# Dashboard Metrics
+# -------------------------------------------------
 total_tx = len(df)
 fraud_tx = int(df["is_fraud"].sum())
 fraud_rate = df["is_fraud"].mean() * 100
 fraud_amount = df[df["is_fraud"] == 1]["amount"].sum()
 
+# -------------------------------------------------
+# Charts Data
+# -------------------------------------------------
 hour_df = df[df["is_fraud"] == 1].groupby("hour").size().reset_index(name="Fraud Transactions")
+
 merchant_df = (
     df.groupby("merchant_category")["is_fraud"]
     .mean()
@@ -386,10 +372,9 @@ merchant_df = (
 
 channel_df = (
     df.groupby("channel")
-    .agg(Total_Transactions=("channel", "size"), Fraud_Rate=("is_fraud", "mean"))
-    .reset_index()
+    .size()
+    .reset_index(name="Transactions")
 )
-channel_df["Fraud_Rate"] = channel_df["Fraud_Rate"] * 100
 
 device_df = (
     df.groupby("device_type")["is_fraud"]
@@ -404,49 +389,73 @@ top_fraud_table = (
     .groupby("merchant_category")
     .agg(
         Fraud_Transactions=("is_fraud", "sum"),
-        Avg_Amount=("amount", "mean")
+        Average_Fraud_Amount=("amount", "mean")
     )
     .reset_index()
     .sort_values("Fraud_Transactions", ascending=False)
 )
 
-
-# -----------------------------
+# -------------------------------------------------
 # Header
-# -----------------------------
+# -------------------------------------------------
 st.markdown("""
-<div class="hero-card">
+<div class="hero-box">
     <div class="hero-title">💳 Credit Card Fraud Detection Dashboard</div>
-    <div class="hero-sub">
+    <div class="hero-subtitle">
         Real-time fraud scoring dashboard with machine learning, business KPIs, and transaction risk analytics.
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-
-# -----------------------------
+# -------------------------------------------------
 # KPI Cards
-# -----------------------------
-k1, k2, k3, k4 = st.columns(4)
-with k1:
-    metric_card("Total Transactions", f"{total_tx:,}", "Synthetic dataset used for simulation")
-with k2:
-    metric_card("Fraud Transactions", f"{fraud_tx:,}", "Detected fraudulent records in dataset")
-with k3:
-    metric_card("Fraud Rate", f"{fraud_rate:.2f}%", "Overall fraud prevalence")
-with k4:
-    metric_card("Fraud Amount", f"₹{fraud_amount:,.0f}", "Total value of fraudulent transactions")
-
-
-# -----------------------------
-# Charts Row 1
-# -----------------------------
-st.markdown('<div class="section-heading">Fraud Analytics Overview</div>', unsafe_allow_html=True)
-
-c1, c2 = st.columns(2)
+# -------------------------------------------------
+c1, c2, c3, c4 = st.columns(4)
 
 with c1:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">Total Transactions</div>
+        <div class="metric-value">{total_tx:,}</div>
+        <div class="metric-sub">Synthetic dataset used for simulation</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c2:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">Fraud Transactions</div>
+        <div class="metric-value">{fraud_tx:,}</div>
+        <div class="metric-sub">Detected fraudulent records in dataset</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c3:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">Fraud Rate</div>
+        <div class="metric-value">{fraud_rate:.2f}%</div>
+        <div class="metric-sub">Overall fraud prevalence</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with c4:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">Fraud Amount</div>
+        <div class="metric-value">₹{fraud_amount:,.0f}</div>
+        <div class="metric-sub">Total value of fraudulent transactions</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# -------------------------------------------------
+# Fraud Analytics Overview
+# -------------------------------------------------
+st.markdown('<div class="section-title">Fraud Analytics Overview</div>', unsafe_allow_html=True)
+
+col1, col2 = st.columns(2)
+
+with col1:
     fig_hour = px.bar(
         hour_df,
         x="hour",
@@ -456,10 +465,8 @@ with c1:
     )
     style_fig(fig_hour)
     st.plotly_chart(fig_hour, use_container_width=True, config={"displayModeBar": False})
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with c2:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+with col2:
     fig_merchant = px.bar(
         merchant_df,
         x="merchant_category",
@@ -470,30 +477,22 @@ with c2:
     )
     style_fig(fig_merchant)
     st.plotly_chart(fig_merchant, use_container_width=True, config={"displayModeBar": False})
-    st.markdown('</div>', unsafe_allow_html=True)
 
+col3, col4 = st.columns(2)
 
-# -----------------------------
-# Charts Row 2
-# -----------------------------
-c3, c4 = st.columns([1, 1])
-
-with c3:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+with col3:
     fig_channel = px.pie(
         channel_df,
         names="channel",
-        values="Total_Transactions",
+        values="Transactions",
         hole=0.62,
         title="Transaction Share by Channel",
         color_discrete_sequence=["#22C55E", "#CBD5E1"]
     )
     style_fig(fig_channel)
     st.plotly_chart(fig_channel, use_container_width=True, config={"displayModeBar": False})
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with c4:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+with col4:
     fig_device = px.bar(
         device_df,
         x="device_type",
@@ -503,13 +502,11 @@ with c4:
     )
     style_fig(fig_device)
     st.plotly_chart(fig_device, use_container_width=True, config={"displayModeBar": False})
-    st.markdown('</div>', unsafe_allow_html=True)
 
-
-# -----------------------------
+# -------------------------------------------------
 # Live Transaction Scoring
-# -----------------------------
-st.markdown('<div class="section-heading">Live Transaction Scoring</div>', unsafe_allow_html=True)
+# -------------------------------------------------
+st.markdown('<div class="section-title">Live Transaction Scoring</div>', unsafe_allow_html=True)
 
 transaction = pd.DataFrame([{
     "amount": amount,
@@ -527,10 +524,9 @@ transaction = pd.DataFrame([{
 if "prediction_result" not in st.session_state:
     st.session_state.prediction_result = None
 
-score_col1, score_col2 = st.columns([1.2, 1])
+left, right = st.columns([1.2, 1])
 
-with score_col1:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+with left:
     st.subheader("Transaction Preview")
     st.dataframe(transaction, use_container_width=True, hide_index=True)
 
@@ -550,22 +546,29 @@ with score_col1:
             "prediction": prediction,
             "decision": decision
         }
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with score_col2:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
-
-    if st.session_state.prediction_result is not None:
+with right:
+    if st.session_state.prediction_result is None:
+        st.markdown("""
+        <div class="result-card">
+            <div class="result-title">No prediction yet</div>
+            <div class="result-text">
+                Fill the transaction details in the sidebar and click <b>Predict Fraud Risk</b>.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
         result = st.session_state.prediction_result
         prob = result["probability"]
         decision = result["decision"]
+        pred_label = "Fraud" if result["prediction"] == 1 else "Genuine"
 
         if decision == "ALLOW":
-            pill_class = "allow"
+            pill_class = "allow-pill"
         elif decision == "REVIEW":
-            pill_class = "review"
+            pill_class = "review-pill"
         else:
-            pill_class = "block"
+            pill_class = "block-pill"
 
         gauge = go.Figure(go.Indicator(
             mode="gauge+number",
@@ -582,56 +585,63 @@ with score_col2:
                 ]
             }
         ))
-        style_fig(gauge, height=280)
+        gauge.update_layout(
+            template="plotly_white",
+            paper_bgcolor="white",
+            height=320,
+            margin=dict(l=20, r=20, t=60, b=20),
+            font=dict(color="#334155")
+        )
         st.plotly_chart(gauge, use_container_width=True, config={"displayModeBar": False})
 
-        st.markdown(
-            f"""
-            <div class="result-card">
-                <div class="result-pill {pill_class}">{decision}</div>
-                <div class="result-title">Decision: {decision}</div>
-                <div class="result-sub">
-                    Fraud probability is <b>{prob:.2%}</b>. 
-                    Prediction label: <b>{"Fraud" if result["prediction"] == 1 else "Genuine"}</b>.
-                </div>
+        st.markdown(f"""
+        <div class="result-card">
+            <div class="decision-pill {pill_class}">{decision}</div>
+            <div class="result-title">Decision: {decision}</div>
+            <div class="result-text">
+                Fraud probability is <b>{prob:.2%}</b>. Prediction label: <b>{pred_label}</b>.
             </div>
-            """,
-            unsafe_allow_html=True
-        )
-    else:
-        st.markdown(
-            """
-            <div class="result-card">
-                <div class="result-title">No prediction yet</div>
-                <div class="result-sub">
-                    Fill the transaction details in the sidebar and click <b>Predict Fraud Risk</b>.
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
-
-
-# -----------------------------
-# Model Insights
-# -----------------------------
-st.markdown('<div class="section-heading">Model Performance & Insights</div>', unsafe_allow_html=True)
+# -------------------------------------------------
+# Model Performance
+# -------------------------------------------------
+st.markdown('<div class="section-title">Model Performance & Insights</div>', unsafe_allow_html=True)
 
 m1, m2, m3 = st.columns(3)
+
 with m1:
-    metric_card("Precision", f"{metrics['precision']:.2f}", "How often fraud predictions are correct")
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">Precision</div>
+        <div class="metric-value">{metrics['precision']:.2f}</div>
+        <div class="metric-sub">How often fraud predictions are correct</div>
+    </div>
+    """, unsafe_allow_html=True)
+
 with m2:
-    metric_card("Recall", f"{metrics['recall']:.2f}", "How many actual frauds are captured")
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">Recall</div>
+        <div class="metric-value">{metrics['recall']:.2f}</div>
+        <div class="metric-sub">How many actual frauds are captured</div>
+    </div>
+    """, unsafe_allow_html=True)
+
 with m3:
-    metric_card("F1 Score", f"{metrics['f1']:.2f}", "Balance between precision and recall")
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-title">F1 Score</div>
+        <div class="metric-value">{metrics['f1']:.2f}</div>
+        <div class="metric-sub">Balance between precision and recall</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-ins1, ins2 = st.columns([1, 1])
+a, b = st.columns(2)
 
-with ins1:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
-    cm = metrics["confusion_matrix"]
+with a:
+    cm = metrics["cm"]
     cm_fig = go.Figure(data=go.Heatmap(
         z=cm,
         x=["Predicted Genuine", "Predicted Fraud"],
@@ -646,15 +656,14 @@ with ins1:
         template="plotly_white",
         paper_bgcolor="white",
         plot_bgcolor="white",
-        font=dict(color="#111827"),
-        margin=dict(l=20, r=20, t=50, b=20),
-        height=320
+        font=dict(color="#334155"),
+        title_font=dict(color="#0F172A", size=16),
+        height=360,
+        margin=dict(l=20, r=20, t=50, b=20)
     )
     st.plotly_chart(cm_fig, use_container_width=True, config={"displayModeBar": False})
-    st.markdown('</div>', unsafe_allow_html=True)
 
-with ins2:
-    st.markdown('<div class="chart-card">', unsafe_allow_html=True)
+with b:
     fi_fig = px.bar(
         feature_importance_df.sort_values("Importance", ascending=True),
         x="Importance",
@@ -663,28 +672,22 @@ with ins2:
         title="Top Feature Importance",
         color_discrete_sequence=["#22C55E"]
     )
-    style_fig(fi_fig, height=320)
+    style_fig(fi_fig)
     st.plotly_chart(fi_fig, use_container_width=True, config={"displayModeBar": False})
-    st.markdown('</div>', unsafe_allow_html=True)
 
+# -------------------------------------------------
+# Fraud Summary Table
+# -------------------------------------------------
+st.markdown('<div class="section-title">Fraud Summary Table</div>', unsafe_allow_html=True)
 
-# -----------------------------
-# Summary Table
-# -----------------------------
-st.markdown('<div class="section-heading">Fraud Summary Table</div>', unsafe_allow_html=True)
+table_html = top_fraud_table.rename(columns={
+    "merchant_category": "Merchant Category",
+    "Fraud_Transactions": "Fraud Transactions",
+    "Average_Fraud_Amount": "Average Fraud Amount"
+}).to_html(index=False, classes="custom-table")
 
-st.markdown('<div class="chart-card">', unsafe_allow_html=True)
-st.dataframe(
-    top_fraud_table.rename(columns={
-        "merchant_category": "Merchant Category",
-        "Fraud_Transactions": "Fraud Transactions",
-        "Avg_Amount": "Average Fraud Amount"
-    }),
-    use_container_width=True,
-    hide_index=True
-)
+st.markdown(table_html, unsafe_allow_html=True)
 st.markdown(
-    '<div class="small-note">This table highlights the merchant categories with the highest number of fraudulent transactions.</div>',
+    '<div class="subtle-note">This table highlights the merchant categories with the highest number of fraudulent transactions.</div>',
     unsafe_allow_html=True
 )
-st.markdown('</div>', unsafe_allow_html=True)
